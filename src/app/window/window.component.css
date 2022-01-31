@@ -1,0 +1,23 @@
+.window {
+    width: 1000px;
+    height: 600px;
+    grid-auto-rows: auto;
+    background-color: teal
+}
+
+.top {
+    width: 1000px;
+    height: 100px;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    background-color: orange
+}
+
+.bottom {
+    width: 800px;
+    height: 500px;
+    display: grid;
+    grid-auto-columns: auto;
+    background-color: blue
+}
