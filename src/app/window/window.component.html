@@ -9,7 +9,7 @@
     <app-search-module></app-search-module>
     
     <app-list-display [json] = "item"></app-list-display>
-    <app-list-display (newItemEvent)="addItem('cake')"></app-list-display>
+    <app-list-display (newItemEvent)="addItem($event)"></app-list-display>
     
 </div>
 

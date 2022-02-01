@@ -17,5 +17,6 @@ export class SearchModuleComponent implements OnInit {
   onEnter(value: string) { 
     this.value = value 
     this.newItemEvent.emit(value)
+    console.log("king")
     }
 }
