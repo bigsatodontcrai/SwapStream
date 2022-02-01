@@ -11,7 +11,7 @@ import { SearchModuleComponent } from '../search-module/search-module.component'
 })
 export class WindowComponent implements AfterViewInit {
 
-  @ViewChild(LoginPageDirective, {static: true}) appLoginPage !: LoginPageDirective;
+  @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
   item = '';
 
   ngAfterViewInit() {
@@ -21,16 +21,18 @@ export class WindowComponent implements AfterViewInit {
 
   addItem(newItem: string) {
     this.item = newItem
+    console.log("here")
     console.log(newItem)
+    
   }
 
   loadComponent() {
-    const viewContainerRef = this.appLoginPage.viewContainerRef;
-    viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent<SearchModuleComponent>(SearchModuleComponent)
-    componentRef.instance.newItemEvent.subscribe(this.addItem("cake"))
-    const componentRef2 = viewContainerRef.createComponent<ListDisplayComponent>(ListDisplayComponent)
-    componentRef2.instance.json = this.item
+    // const viewContainerRef = this.appLoginPage.viewContainerRef;
+    // viewContainerRef.clear();
+    // const componentRef = viewContainerRef.createComponent<SearchModuleComponent>(SearchModuleComponent)
+    // componentRef.instance.newItemEvent.subscribe(this.addItem("cake"))
+    // const componentRef2 = viewContainerRef.createComponent<ListDisplayComponent>(ListDisplayComponent)
+    // componentRef2.instance.json = this.item
     
   }
   
