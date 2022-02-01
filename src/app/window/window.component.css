@@ -5,6 +5,12 @@
     background-color: teal
 }
 
+.btn {
+    width: 100px;
+    height: 100px;
+    background-color: pink
+}
+
 .top {
     width: 1000px;
     height: 100px;
@@ -15,9 +21,10 @@
 }
 
 .bottom {
-    width: 800px;
-    height: 500px;
+    width: 1000px;
+    height: 400px;
     display: grid;
-    grid-auto-columns: auto;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
     background-color: blue
 }

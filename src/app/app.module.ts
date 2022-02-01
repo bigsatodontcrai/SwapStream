@@ -10,6 +10,10 @@ import { PlayerModuleComponent } from './player-module/player-module.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SongsComponent } from './songs/songs.component';
 import { StreamingAPIComponent } from './streaming-api/streaming-api.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LoginPageDirective } from './login-page.directive';
+import { LoaderDirective } from './loader.directive';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +24,10 @@ import { StreamingAPIComponent } from './streaming-api/streaming-api.component';
     PlayerModuleComponent,
     PlaylistComponent,
     SongsComponent,
-    StreamingAPIComponent
+    StreamingAPIComponent,
+    LandingPageComponent,
+    LoginPageDirective,
+    LoaderDirective
   ],
   imports: [
     BrowserModule,
