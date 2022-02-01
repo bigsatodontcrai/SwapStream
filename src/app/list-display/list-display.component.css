@@ -1,5 +1,7 @@
 .lists {
     width: 400px;
     height: 400px;
-    background-color: yellow
+    background-color: yellow;
+    display: grid;
+    grid-template-rows: auto
 }

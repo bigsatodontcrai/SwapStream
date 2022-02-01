@@ -1,1 +1,2 @@
-<input type="text" class ="search">
+<button type="search" (click)="onEnter(box.value)"></button>
+<input #box (keyup.enter)="onEnter(box.value)">

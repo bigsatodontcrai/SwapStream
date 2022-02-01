@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list-display',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit {
-
+  @Input() json = '';
   constructor() { }
 
   ngOnInit(): void {
