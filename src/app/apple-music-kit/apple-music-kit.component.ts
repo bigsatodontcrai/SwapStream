@@ -47,7 +47,7 @@ export class AppleMusicKitComponent implements OnInit {
             name: 'My Cool Web App',
             build: '2022.4.11',
         },
-        storefrontId: '1'
+        storefrontId: 'us'
         })
     });
   }*/
