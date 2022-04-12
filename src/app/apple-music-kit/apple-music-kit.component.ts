@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-let music: MusicKit.MusicKitInstance;
+import * as jose from 'jose'
+
+//let music: MusicKit.MusicKitInstance;
 
 
 @Component({
@@ -9,13 +11,32 @@ let music: MusicKit.MusicKitInstance;
 })
 export class AppleMusicKitComponent implements OnInit {
 
+  Devtoken = '';
+  privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs-----END PRIVATE KEY-----';
+
   constructor() { }
 
   ngOnInit(): void {
-    this.setupapple();
+    this.creatdevtoken()
+    //this.setupapple();
   }
-  
-  setupapple() {
+
+  async creatdevtoken()
+  {
+    let datetime = Date.parse(Date())/1000;
+    const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
+
+    const Devtoken = await new jose.SignJWT({})
+    .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC"})
+    .setIssuedAt(datetime)
+    .setIssuer('QTM38LJQ3P')
+    .setExpirationTime('20d')
+    .sign(ecPrivateKey)
+
+    console.log(Devtoken)
+  }
+
+  /*setupapple() {
     document.addEventListener('musickitloaded', function () {
         // MusicKit global is now defined.
     
@@ -29,5 +50,6 @@ export class AppleMusicKitComponent implements OnInit {
         storefrontId: '1'
         })
     });
-  }
+  }*/
+  
 }
