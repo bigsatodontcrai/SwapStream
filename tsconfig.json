@@ -4,7 +4,7 @@
   "compilerOptions": {
     "typeRoots": [
       "node_modules/@types",
-      "node_modules/musickit-typescript"
+      "node_modules/@types/musickit-typescript"
     ],
     "allowJs": true,
     "baseUrl": "./",
