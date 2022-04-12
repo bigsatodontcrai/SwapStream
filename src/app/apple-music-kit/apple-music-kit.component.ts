@@ -26,10 +26,9 @@ export class AppleMusicKitComponent implements OnInit {
     let datetime = Date.parse(Date())/1000;
     const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
-    const Devtoken = await new jose.SignJWT({})
+    const Devtoken = await new jose.SignJWT({iss: "QTM38LJQ3P"})
     .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC"})
     .setIssuedAt(datetime)
-    .setIssuer('QTM38LJQ3P')
     .setExpirationTime('20d')
     .sign(ecPrivateKey)
 
