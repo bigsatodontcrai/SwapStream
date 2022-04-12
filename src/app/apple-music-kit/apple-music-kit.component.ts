@@ -18,7 +18,7 @@ export class AppleMusicKitComponent implements OnInit {
   setupapple() {
     document.addEventListener('musickitloaded', function () {
         // MusicKit global is now defined.
-    
+  
         // Call configure() to configure an instance of MusicKit JS.
         music = MusicKit.configure({
         developerToken: '',
@@ -29,5 +29,6 @@ export class AppleMusicKitComponent implements OnInit {
         storefrontId: '1'
         })
     });
+    alert(music.developerToken);
   }
 }
