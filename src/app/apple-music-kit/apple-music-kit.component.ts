@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import 'musickit-typescript/MusicKit';
 let music: MusicKit.MusicKitInstance;
 
 
