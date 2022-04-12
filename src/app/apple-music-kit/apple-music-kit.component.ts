@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//declare var MusicKit: any;
+declare var MusicKit: any;
 
 @Component({
   selector: 'app-apple-music-kit',
@@ -15,7 +15,7 @@ export class AppleMusicKitComponent implements OnInit {
   }
   
   setupapple() {
-    //document.addEventListener('musickitloaded', function () {
+    document.addEventListener('musickitloaded', function () {
         // MusicKit global is now defined.
   
         // Call configure() to configure an instance of MusicKit JS.
@@ -28,6 +28,6 @@ export class AppleMusicKitComponent implements OnInit {
         storefrontId: '1'
         });
         console.log(MusicKit.getInstance());
-    //});
+    });
   }
 }
