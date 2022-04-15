@@ -11,8 +11,10 @@ import * as jose from 'jose'
 })
 export class AppleMusicKitComponent implements OnInit {
 
+  
+
   Devtoken = '';
-  privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs-----END PRIVATE KEY-----';
+  privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
 
   constructor() { }
 
@@ -26,10 +28,11 @@ export class AppleMusicKitComponent implements OnInit {
     let datetime = Date.parse(Date())/1000;
     const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
-    const Devtoken = await new jose.SignJWT({iss: "QTM38LJQ3P"})
+    const Devtoken = await new jose.SignJWT({})
     .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC"})
+    .setIssuer("QTM38LJQ3P")
     .setIssuedAt(datetime)
-    .setExpirationTime('20d')
+    .setExpirationTime('1d')
     .sign(ecPrivateKey)
 
     console.log(Devtoken)
