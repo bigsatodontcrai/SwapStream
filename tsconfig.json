@@ -1,10 +1,9 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "typeRoots": [
       "node_modules/@types",
-      "node_modules/musickit-typescript"
+      "node_modules/musickit-js-typescript-support"
     ],
     "allowJs": true,
     "baseUrl": "./",
@@ -21,6 +20,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "pretty": true,
     "target": "es2017",
     "module": "es2020",
     "lib": [
