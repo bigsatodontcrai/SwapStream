@@ -18,7 +18,6 @@ export class AppleMusicKitComponent implements OnInit {
 
   ngOnInit(): void {
     this.creatdevtoken()
-    this.setupapple();
   }
 
   async creatdevtoken()
@@ -26,20 +25,22 @@ export class AppleMusicKitComponent implements OnInit {
     let datetime = Date.parse(Date())/1000;
     const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
-    const Devtoken = await new jose.SignJWT({})
+    await new jose.SignJWT({})
     .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC"})
     .setIssuer("QTM38LJQ3P")
     .setIssuedAt(datetime)
     .setExpirationTime('1d')
     .sign(ecPrivateKey)
-
-    console.log(Devtoken)
+    .then((jwt : string) => {
+      console.log(jwt);
+      this.setupapple(jwt);
+    });
   }
 
-  setupapple() {
+  setupapple(devToken: string) {
     let music: any;
     MusicKit.configure({
-    developerToken: 'eyJhbGciOiJFUzI1NiIsImtpZCI6IlczU1pQRDMyUUMifQ.eyJpc3MiOiJRVE0zOExKUTNQIiwiaWF0IjoxNjQ5NzI2OTgzLCJleHAiOjE2NTE0NTQ5ODN9.5NYNeKqUBJCRLKhRdqhD3lFdIH02tnbk8RrW6LpinjH-EpVDF3lRfBwjjsrleXjK2l0QRKtmLGwBigWuc5bTaA',
+    developerToken: devToken, //eyJhbGciOiJFUzI1NiIsImtpZCI6IlczU1pQRDMyUUMifQ.eyJpc3MiOiJRVE0zOExKUTNQIiwiaWF0IjoxNjQ5NzI2OTgzLCJleHAiOjE2NTE0NTQ5ODN9.5NYNeKqUBJCRLKhRdqhD3lFdIH02tnbk8RrW6LpinjH-EpVDF3lRfBwjjsrleXjK2l0QRKtmLGwBigWuc5bTaA
     app: {
         name: 'My Cool Web App',
         build: '2022.4.11',
