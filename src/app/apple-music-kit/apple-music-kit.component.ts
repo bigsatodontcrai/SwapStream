@@ -21,11 +21,12 @@ export class AppleMusicKitComponent implements OnInit {
     this.createdevtoken();
   }
 
+  // This is called during setupapple in order to give the component access the MusicKit through getMusicKitInstance
   setMusicKitInstance(kit: any): any {
     this.getMusicKitInstance = () => { return kit };
   }
 
-  // This function is defined within setupapple
+  // This function is defined within setMusicKitInstance
   getMusicKitInstance = () : any => {};
 
   handlePlayButtonClicked() {
@@ -33,8 +34,10 @@ export class AppleMusicKitComponent implements OnInit {
     let music = this.getMusicKitInstance();
     if (this.musicPlaying === true) {
       music.pause();
+      this.musicPlaying = false;
     } else {
       music.play();
+      this.musicPlaying = true;
     }
   }
 
@@ -47,9 +50,6 @@ export class AppleMusicKitComponent implements OnInit {
       if (stationID) {
         music.setQueue({ station: stationID }).then((queue: any) => {
           music.playNext({song: queue['_itemIDs'][0]})
-          .then(() => {
-            //music.play();
-          })
           .catch((error : any) => console.error(error));
         });
         
@@ -58,8 +58,6 @@ export class AppleMusicKitComponent implements OnInit {
       }
     });
   }
-
-
 
   async createdevtoken()
   {
