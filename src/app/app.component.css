@@ -1,5 +1,20 @@
 .btn {
-    height: 100px;
-    width: 100px;
-    background-color: pink
+    height: 50px;
+    width: 200px;
+    background-color: #f74009;
+    opacity: 0.8;
+    transition: 0.3s;
+    
 }
+
+.login {
+    text-align: center;
+    display: flex;
+    align-content: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    margin: auto;
+    
+}
+
+.btn:hover {opacity: 1}

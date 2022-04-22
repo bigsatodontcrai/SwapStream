@@ -10,6 +10,7 @@ import { LoginPageDirective } from './login-page.directive'
 
 export class AppComponent{
   title = 'SwapStream';
+  userlogin = false;
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, {static: true}) appLoginPage !: LoginPageDirective;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
@@ -29,8 +30,9 @@ export class AppComponent{
   }
 
   loadComponent(){
-    const viewContainerRef = this.appLoginPage.viewContainerRef;
-    viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent<WindowComponent>(WindowComponent)
+    //const viewContainerRef = this.appLoginPage.viewContainerRef;
+    //viewContainerRef.clear();
+    //const componentRef = viewContainerRef.createComponent<WindowComponent>(WindowComponent)
+    this.userlogin = true;
   }
 }

@@ -7,12 +7,17 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
+
 <ng-template appLoginPage></ng-template>
-<app-apple-music-kit></app-apple-music-kit>
-<button class = 'btn' (click)='loadComponent()'></button>
-
-<div>
-
+<!--<app-apple-music-kit></app-apple-music-kit>-->
+<app-window *ngIf="userlogin" ></app-window>
+<div class="login" *ngIf="!userlogin">
+    <div>
+        <button class = 'btn' (click)='loadComponent()'> Login to SwapStream</button>
+    </div>
+    <div>
+        <button class = 'btn' (click)='loadComponent()'> Continue as Guest</button>
+    </div>
 </div>
 <!-- <app-window>
 
