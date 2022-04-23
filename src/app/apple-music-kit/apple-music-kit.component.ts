@@ -13,15 +13,24 @@ export class AppleMusicKitComponent implements OnInit {
   privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
   appleMusicAPI : any;
   musicPlaying = false;
+  musicAlreadyQueued = false;
+  playButtonText = 'fa fa-play';
   constructor() { 
   }
 
   ngOnInit(): void {
     this.appleMusicAPI = {};
     this.createdevtoken();
+    if (this.musicAlreadyQueued === false) {
+      this.queueSongsFromUserStation(); // THIS IS ONLY HERE FOR NOW UNTIL WE FIGURE OUT HOW TO PICK SPECIFIC SONGS
+      // music.setQueue({ album: '1025210938' }).then((queue : any) => {
+      //   console.log(music.api.music(queue['_itemIDs'][0]), {mode: 'cors'});
+      // });
+      this.musicAlreadyQueued = true;
+    }
   }
 
-  // This is called during setupapple in order to give the component access the MusicKit through getMusicKitInstance
+  // This is called during initializeAppleMusicKit in order to give the component access the MusicKit through getMusicKitInstance
   setMusicKitInstance(kit: any): any {
     this.getMusicKitInstance = () => { return kit };
   }
@@ -30,14 +39,15 @@ export class AppleMusicKitComponent implements OnInit {
   getMusicKitInstance = () : any => {};
 
   handlePlayButtonClicked() {
-    this.queueSongsFromUserStation(); // THIS IS ONLY HERE FOR NOW UNTIL WE FIGURE OUT HOW TO PICK SPECIFIC SONGS
-    let music = this.getMusicKitInstance();
+    const music = this.getMusicKitInstance();
     if (this.musicPlaying === true) {
       music.pause();
       this.musicPlaying = false;
+      this.playButtonText = 'fa fa-play';
     } else {
       music.play();
       this.musicPlaying = true;
+      this.playButtonText = 'fa fa-pause';
     }
   }
 
@@ -71,11 +81,11 @@ export class AppleMusicKitComponent implements OnInit {
     .setExpirationTime('1d')
     .sign(ecPrivateKey)
     .then((jwt : string) => {
-      this.setupapple(jwt);
+      this.initializeAppleMusicKit(jwt);
     });
   }
 
-  setupapple(devToken: string) {
+  initializeAppleMusicKit(devToken: string) {
     let music: any;
     MusicKit.configure({
     developerToken: devToken, //eyJhbGciOiJFUzI1NiIsImtpZCI6IlczU1pQRDMyUUMifQ.eyJpc3MiOiJRVE0zOExKUTNQIiwiaWF0IjoxNjQ5NzI2OTgzLCJleHAiOjE2NTE0NTQ5ODN9.5NYNeKqUBJCRLKhRdqhD3lFdIH02tnbk8RrW6LpinjH-EpVDF3lRfBwjjsrleXjK2l0QRKtmLGwBigWuc5bTaA
