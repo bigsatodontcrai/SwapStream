@@ -31,11 +31,8 @@ import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.compon
     LandingPageComponent,
     LoginPageDirective,
     LoaderDirective,
-<<<<<<< HEAD
-    ListGeneratorDirective
-=======
+    ListGeneratorDirective,
     AppleMusicKitComponent
->>>>>>> 3383a8bd935dc5bb5234d21d5037942b05f145be
   ],
   imports: [
     BrowserModule,
