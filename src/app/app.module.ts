@@ -14,6 +14,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginPageDirective } from './login-page.directive';
 import { LoaderDirective } from './loader.directive';
 import { ListGeneratorDirective } from './list-generator.directive';
+import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.component';
+
 
 
 @NgModule({
@@ -29,7 +31,11 @@ import { ListGeneratorDirective } from './list-generator.directive';
     LandingPageComponent,
     LoginPageDirective,
     LoaderDirective,
+<<<<<<< HEAD
     ListGeneratorDirective
+=======
+    AppleMusicKitComponent
+>>>>>>> 3383a8bd935dc5bb5234d21d5037942b05f145be
   ],
   imports: [
     BrowserModule,
