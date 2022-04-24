@@ -1,16 +1,6 @@
 <div class="lists">
-<app-playlist [json]="json"></app-playlist>
-<app-playlist [json]="json"></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
+    <li *ngFor="let playlist of Playlist" class="playlist">
+        <span >{{playlist.title}}</span>
+        <span >{{playlist.owner}}</span>
+    </li>
 </div>

@@ -16,6 +16,8 @@ export class PlaylistComponent implements OnInit, OnChanges {
   title : string = '';
   owner : string = '';
   source : string = '';
+
+  
  
   constructor() { }
 
