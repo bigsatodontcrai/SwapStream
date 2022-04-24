@@ -7,24 +7,38 @@ import {playlist} from "../playlist"
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit {
-  @Input() json = '';
+  @Input() source?:string;
   constructor() { }
 
-  Playlist: playlist[] = [
-    {title: "pog1", owner: "josh", source: "apple"},
-    {title: "pog2", owner: "josh", source: "apple"},
-    {title: "pog3", owner: "josh", source: "apple"},
-    {title: "pog4", owner: "josh", source: "apple"},
-    {title: "pog5", owner: "josh", source: "apple"},
-    {title: "pog6", owner: "josh", source: "apple"},
-    {title: "pog7", owner: "josh", source: "apple"},
-    {title: "pog8", owner: "josh", source: "apple"},
-    {title: "pog9", owner: "josh", source: "apple"},
-    {title: "pog10", owner: "josh", source: "apple"},
-    {title: "pog11", owner: "josh", source: "apple"}
-  ]
+  Playlist: playlist[] = []
 
   ngOnInit(): void {
+    if(this.source == "apple")
+    {
+      this.appleplaylist()
+    }
+    if(this.source == "spotify")
+    {
+      this.spotifyplaylist()
+    }
+  }
+
+  appleplaylist(){
+    
+    for (let i = 0; i < 11; i++) {
+      this.Playlist.push({title: "pog"+i, owner: "josh", source: "apple"})
+    }
+
+    console.log("apple playlist created");
+  } 
+
+  spotifyplaylist(){
+
+    for (let i = 0; i < 11; i++) {
+      this.Playlist.push({title: "nice"+i, owner: "josh", source: "spotify"})
+    }
+
+    console.log("spotify playlist created");
   }
 
 }
