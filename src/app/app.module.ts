@@ -13,6 +13,7 @@ import { StreamingAPIComponent } from './streaming-api/streaming-api.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginPageDirective } from './login-page.directive';
 import { LoaderDirective } from './loader.directive';
+import { ListGeneratorDirective } from './list-generator.directive';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { LoaderDirective } from './loader.directive';
     StreamingAPIComponent,
     LandingPageComponent,
     LoginPageDirective,
-    LoaderDirective
+    LoaderDirective,
+    ListGeneratorDirective
   ],
   imports: [
     BrowserModule,

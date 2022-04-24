@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { SearchModuleComponent } from '../search-module/search-module.component'
 
 @Component({
   selector: 'app-list-display',
@@ -6,10 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit {
-  @Input() json = '';
+  @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @Input() json : any;
+  
   constructor() { }
 
   ngOnInit(): void {
+    
+  }
+
+  done(): void {
+    console.log(this.json.playlists)
   }
 
 }

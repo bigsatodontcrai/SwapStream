@@ -7,20 +7,18 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 })
 export class PlaylistComponent implements OnInit, OnChanges {
   
-  @Input() public set json(val: string){
-    this.title = val;
-    this.owner = "dog";
-    this.source = "king";
-    console.log(val)
-  }
-  title : string = '';
-  owner : string = '';
-  source : string = '';
+  @Input() playlist = [];
+
+  title = '';
+  @Input() owner = '';
+  @Input() source = '';
  
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit(): void {
-    
+    this.title = this.playlist[0];
   }
 
   ngOnChanges() {
