@@ -1,8 +1,24 @@
 .lists {
     width: 400px;
     height: 400px;
-    background-color: yellow;
+    background-color: rgb(0, 239, 239);
+    overflow-y: scroll;
+}
+
+.playlist {
+    height: 50px;
+    width: 100 px;
+    background-color: rgb(0, 207, 207);
     display: grid;
-    overflow: scroll;
-    grid-template-rows: auto
+    grid-template-columns: 1fr 1fr
+}
+
+.owner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    margin-left: auto;
+    margin-right: auto;
 }

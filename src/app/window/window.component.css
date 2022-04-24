@@ -5,13 +5,15 @@
     justify-items: center;
     grid-template-rows: 1fr 4fr;
     grid-template-columns: 1fr 1fr;
-    background-color: teal
+    background-color: teal;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btn {
     width: 100px;
     height: 100px;
-    background-color: pink
+    background-color: pink;
 }
 
 .top {
@@ -20,7 +22,7 @@
     display: grid;
     justify-items: center;
     grid-template-columns: 1fr 1fr;
-    background-color: orange
+    background-color: orange;
 }
 
 .bottom {
@@ -29,5 +31,5 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    background-color: blue
+    background-color: blue;
 }

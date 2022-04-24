@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ViewContainerRef, Input, OnDestroy } from '@angular/core';
 import { LoginPageDirective } from '../login-page.directive'
 import { ListDisplayComponent } from '../list-display/list-display.component'
-import { LandingPageComponent } from '../landing-page/landing-page.component'
 import { SearchModuleComponent } from '../search-module/search-module.component'
 
 @Component({
