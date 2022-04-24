@@ -9,7 +9,7 @@ import { SearchModuleComponent } from '../search-module/search-module.component'
 export class ListDisplayComponent implements OnInit {
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json : any;
-  
+  playlist = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -18,6 +18,7 @@ export class ListDisplayComponent implements OnInit {
 
   done(): void {
     console.log(this.json.playlists)
+    this.playlist = this.json.playlists
   }
 
 }

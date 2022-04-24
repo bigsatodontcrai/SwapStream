@@ -1,3 +1,3 @@
 <div class="lists">
-<app-playlist *ngFor="let items of json.playlists; let i = index;" [playlist] = "json.playlists[i]" [owner] = "json.info[0].name" [source] = "json.info[0].service"></app-playlist>
+<app-playlist *ngFor="let items of json.playlists;" [playlist] = "items" [owner] = "json.info[0].name" [source] = "json.info[0].service"></app-playlist>
 </div>
