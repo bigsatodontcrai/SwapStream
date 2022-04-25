@@ -10,7 +10,7 @@
 
 <ng-template appLoginPage></ng-template>
 <!--<app-apple-music-kit></app-apple-music-kit>-->
-<app-window *ngIf="userlogin" ></app-window>
+<app-window *ngIf="userlogin" [data] = "item"></app-window>
 <div class="login" *ngIf="!userlogin">
     <div>
         <button class = 'btn' (click)='loadComponent()'> Login to SwapStream</button>

@@ -5,6 +5,7 @@ import { LoginPageDirective } from './login-page.directive'
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {ApiServiceService } from './api-service.service';
 import { HttpHeaders } from '@angular/common/http';
+import { SearchModuleComponent } from './search-module/search-module.component'
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class AppComponent{
   title = 'SwapStream';
   userlogin = false;
+  item : any;
   
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, {static: true}) appLoginPage !: LoginPageDirective;
@@ -51,15 +53,17 @@ export class AppComponent{
       (response:any)=>{
         this.userlogin = true;
         item = response;
-        console.log(item)
+        console.log(item);
+        this.item = item;
+        this.userlogin = true;
       },
       ()=>{
         console.error('Request failed bozo!');
         
       }
     );
-    console.log(thing);
-    this.userlogin = true;
+    
+    
     
     
   }
