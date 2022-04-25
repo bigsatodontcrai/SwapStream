@@ -27,6 +27,11 @@ export class ListDisplayComponent implements OnInit {
     }
   }
 
+  done(): void {
+    console.log(this.json.playlists)
+    this.playlist = this.json.playlists
+  }
+
   appleplaylist(){
 
     for (let i = 0; i < 11; i++) {
@@ -43,11 +48,6 @@ export class ListDisplayComponent implements OnInit {
     }
 
     console.log("spotify playlist created");
-  }
-
-  done(): void {
-    console.log(this.json.playlists)
-    this.playlist = this.json.playlists
   }
 
 }

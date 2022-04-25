@@ -7,6 +7,7 @@ import { WindowComponent } from './window/window.component';
 import { SearchModuleComponent } from './search-module/search-module.component';
 import { ListDisplayComponent } from './list-display/list-display.component';
 import { PlayerModuleComponent } from './player-module/player-module.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 import { SongsComponent } from './songs/songs.component';
 import { StreamingAPIComponent } from './streaming-api/streaming-api.component';
 import { LoginPageDirective } from './login-page.directive';
@@ -23,6 +24,7 @@ import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.compon
     SearchModuleComponent,
     ListDisplayComponent,
     PlayerModuleComponent,
+    PlaylistComponent,
     SongsComponent,
     StreamingAPIComponent,
     LoginPageDirective,

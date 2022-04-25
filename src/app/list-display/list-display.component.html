@@ -1,7 +1,8 @@
 <div class="lists">
-  <!-- <app-playlist *ngFor="let items of json.playlists;" [playlist] = "items" [owner] = "json.info[0].name" [source] = "json.info[0].service"></app-playlist> -->
-  <li *ngFor="let playlist of Playlist" class="playlist">
+  <app-playlist *ngFor="let items of json.playlists;" [playlist] = "items" [owner] = "json.info[0].name" [source] = "json.info[0].service"></app-playlist>
+  
+  <!-- <li *ngFor="let playlist of Playlist" class="playlist">
     <span class="title">{{playlist.title}}</span>
     <span class="owner">{{playlist.owner}}</span>
-  </li>
+  </li> -->
 </div>
