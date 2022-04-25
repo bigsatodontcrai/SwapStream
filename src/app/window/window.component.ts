@@ -14,9 +14,10 @@ export class WindowComponent implements AfterViewInit {
 
   @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
 
-
   data: any;
   item = data;
+
+  
 
   ngAfterViewInit() {
     console.log(data);
@@ -38,6 +39,8 @@ export class WindowComponent implements AfterViewInit {
     // componentRef2.instance.json = this.item
 
   }
+
+  
 
 
 }

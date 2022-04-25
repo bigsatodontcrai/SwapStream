@@ -8,6 +8,11 @@ export class ApiServiceService {
 
   constructor(private http: HttpClient) { }
 
+  public getSpotifyAuth(){
+    const url: string = 'http://127.0.0.1:8000/senditem/'
+    return this.http.get(url)
+  }
+
   public getQuery(query: string){
     const url: string = `https://api.spotify.com/v1/'${query}`;
     const headers = new HttpHeaders({

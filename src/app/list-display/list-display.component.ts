@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import {playlist} from "../playlist"
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-display',
