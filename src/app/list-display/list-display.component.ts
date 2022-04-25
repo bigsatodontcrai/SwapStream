@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { SearchModuleComponent } from '../search-module/search-module.component'
 import {playlist} from "../playlist"
 
 @Component({
@@ -8,6 +9,8 @@ import {playlist} from "../playlist"
 })
 export class ListDisplayComponent implements OnInit {
   @Input() source?:string;
+  @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @Input() json : any;
   constructor() { }
 
   Playlist: playlist[] = []
@@ -39,6 +42,10 @@ export class ListDisplayComponent implements OnInit {
     }
 
     console.log("spotify playlist created");
+  }
+
+  done(): void {
+    console.log(this.json.playlists)
   }
 
 }

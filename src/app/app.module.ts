@@ -11,6 +11,7 @@ import { SongsComponent } from './songs/songs.component';
 import { StreamingAPIComponent } from './streaming-api/streaming-api.component';
 import { LoginPageDirective } from './login-page.directive';
 import { LoaderDirective } from './loader.directive';
+import { ListGeneratorDirective } from './list-generator.directive';
 import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.component';
 
 
@@ -25,6 +26,7 @@ import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.compon
     StreamingAPIComponent,
     LoginPageDirective,
     LoaderDirective,
+    ListGeneratorDirective,
     AppleMusicKitComponent
   ],
   imports: [

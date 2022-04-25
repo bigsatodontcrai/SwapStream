@@ -2,6 +2,8 @@ import { Component, AfterViewInit, ViewChild, ViewContainerRef, Input, OnDestroy
 import { LoginPageDirective } from '../login-page.directive'
 import { ListDisplayComponent } from '../list-display/list-display.component'
 import { SearchModuleComponent } from '../search-module/search-module.component'
+import { HttpClient } from '@angular/common/http';
+import * as data from '../../assets/json/placeholder.json';
 
 @Component({
   selector: 'app-window',
@@ -11,15 +13,15 @@ import { SearchModuleComponent } from '../search-module/search-module.component'
 export class WindowComponent implements AfterViewInit {
 
   @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
-  item = '';
+  data: any;
+  item = data;
 
   ngAfterViewInit() {
-    
+    console.log(data);
     
   }
 
   addItem(newItem: string) {
-    this.item = newItem
     console.log("here")
     console.log(newItem)
     
