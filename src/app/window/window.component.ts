@@ -13,18 +13,20 @@ import * as data from '../../assets/json/placeholder.json';
 export class WindowComponent implements AfterViewInit {
 
   @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
+
+
   data: any;
   item = data;
 
   ngAfterViewInit() {
     console.log(data);
-    
+
   }
 
   addItem(newItem: string) {
     console.log("here")
     console.log(newItem)
-    
+
   }
 
   loadComponent() {
@@ -34,8 +36,8 @@ export class WindowComponent implements AfterViewInit {
     // componentRef.instance.newItemEvent.subscribe(this.addItem("cake"))
     // const componentRef2 = viewContainerRef.createComponent<ListDisplayComponent>(ListDisplayComponent)
     // componentRef2.instance.json = this.item
-    
+
   }
-  
+
 
 }

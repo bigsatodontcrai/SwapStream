@@ -1,0 +1,6 @@
+<div class="playlist" (click) = "dropDown()">
+<div>{{ title }} </div> 
+<div> {{ owner }} </div> 
+<div> {{ source }} </div>
+</div>
+<app-songs *ngFor="let items of playlist;" [song] = "items[0]" [artist] = "items[1]" [visible] = "songs_visible"></app-songs>

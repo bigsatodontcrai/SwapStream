@@ -8,7 +8,7 @@ export class ListGeneratorDirective {
   owner: string;
   plist: string;
 
-  
+
   constructor() {
     this.owner = '';
     this.plist = '';

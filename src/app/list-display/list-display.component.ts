@@ -11,6 +11,7 @@ export class ListDisplayComponent implements OnInit {
   @Input() source?:string;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json : any;
+  playlist = [];
   constructor() { }
 
   Playlist: playlist[] = []
@@ -27,13 +28,13 @@ export class ListDisplayComponent implements OnInit {
   }
 
   appleplaylist(){
-    
+
     for (let i = 0; i < 11; i++) {
       this.Playlist.push({title: "pog"+i, owner: "josh", source: "apple"})
     }
 
     console.log("apple playlist created");
-  } 
+  }
 
   spotifyplaylist(){
 
@@ -46,6 +47,7 @@ export class ListDisplayComponent implements OnInit {
 
   done(): void {
     console.log(this.json.playlists)
+    this.playlist = this.json.playlists
   }
 
 }
