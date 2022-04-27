@@ -1,6 +1,6 @@
 .window {
-    width: 1000px;
-    height: 500px;
+    width: 100vw;
+    height: 90vh;
     display: grid;
     justify-items: center;
     grid-template-rows: 1fr 4fr;
