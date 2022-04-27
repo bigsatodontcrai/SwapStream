@@ -14,6 +14,7 @@ export class ListDisplayComponent implements OnInit {
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json : any;
+  selected_list = 0;
   playlist = [];
   constructor() { }
 
@@ -28,6 +29,10 @@ export class ListDisplayComponent implements OnInit {
     {
       this.spotifyplaylist()
     }
+  }
+
+  select(index:number): void{
+    this.selected_list = index;
   }
 
   done(): void {

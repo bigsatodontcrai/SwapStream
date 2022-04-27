@@ -14,6 +14,8 @@ export class PlaylistComponent implements OnInit, OnChanges {
   @Input() owner = '';
   @Input() source = '';
   @Input() songs_visible = false;
+  @Input() addable = false;
+  @Input() selected = false;
  
   constructor() { 
     

@@ -9,6 +9,7 @@ export class SongsComponent implements OnInit {
   @Input() song = '';
   @Input() artist = '';
   @Input() visible = false;
+  @Input() addable = false;
   constructor() { }
 
   ngOnInit(): void {
