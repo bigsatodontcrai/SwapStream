@@ -20,6 +20,7 @@ export class AppComponent{
   
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, {static: true}) appLoginPage !: LoginPageDirective;
+  @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
   
   //@ViewChildren('child', {read: ElementRef}) childComp:QueryList<ElementRef>
@@ -42,6 +43,8 @@ export class AppComponent{
     
     return this.http.get(url, {responseType:'json'});
   }
+
+  
 
   loadComponent(){
     //const viewContainerRef = this.appLoginPage.viewContainerRef;

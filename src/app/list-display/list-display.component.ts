@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListDisplayComponent implements OnInit {
   @Input() source?:string;
+  @Input() search = false;
+  @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json : any;
   playlist = [];

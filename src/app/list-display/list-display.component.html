@@ -1,6 +1,13 @@
 <div class="lists">
-  <app-playlist *ngFor="let items of json.playlists; let i=index;" [playlist] = "items" [owner] = "json.info[0].name" [source] = "json.info[0].service"></app-playlist>
+  <div *ngIf="song_display==false">
+    <app-playlist *ngFor="let items of json.playlists; let i=index;" [playlist]="items" [owner]="items[1].info[0].name"
+      [source]="items[1].info[0].service"></app-playlist>
+  </div>
+  <div *ngIf="song_display">
+    <app-playlist [songs_visible]="true" [playlist]="json.query"></app-playlist>
+  </div>
   
+
   <!-- <li *ngFor="let playlist of Playlist" class="playlist">
     <span class="title">{{playlist.title}}</span>
     <span class="owner">{{playlist.owner}}</span>

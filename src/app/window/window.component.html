@@ -6,10 +6,10 @@
 <div class="window">
     
     <app-player-module ></app-player-module>
-    <app-search-module ></app-search-module>
+    <app-search-module (newItemEvent) = "doSearch($event)" (otherItemEvent) = "setToggle($event)"></app-search-module>
     
-    <app-list-display [json] = "item" source="apple" ></app-list-display>
-    <app-list-display source="spotify"></app-list-display>
+    <app-list-display [json] = "item"></app-list-display>
+    <app-list-display [json] = "item2" [song_display] = "toggle"></app-list-display>
     
 </div>
 

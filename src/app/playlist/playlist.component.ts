@@ -13,7 +13,7 @@ export class PlaylistComponent implements OnInit, OnChanges {
   title = '';
   @Input() owner = '';
   @Input() source = '';
-  songs_visible = false;
+  @Input() songs_visible = false;
  
   constructor() { 
     
@@ -21,7 +21,7 @@ export class PlaylistComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.title = this.playlist[0];
-    this.songs_visible = false;
+    //this.songs_visible = false;
   }
 
   ngOnChanges() {
