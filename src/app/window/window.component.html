@@ -9,7 +9,7 @@
     <app-search-module (newItemEvent) = "doSearch($event)" (otherItemEvent) = "setToggle($event)"></app-search-module>
     
     <app-list-display [json] = "item"></app-list-display>
-    <app-list-display [json] = "item2" [song_display] = "toggle"></app-list-display>
+    <app-list-display [json] = "item2" [song_display] = "toggle" [search] = "true"></app-list-display>
     
 </div>
 

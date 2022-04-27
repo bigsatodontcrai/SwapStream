@@ -21,14 +21,6 @@ export class ListDisplayComponent implements OnInit {
   Playlist: playlist[] = []
 
   ngOnInit(): void {
-    if(this.source == "apple")
-    {
-      this.appleplaylist()
-    }
-    if(this.source == "spotify")
-    {
-      this.spotifyplaylist()
-    }
   }
 
   select(index:number): void{
@@ -40,22 +32,5 @@ export class ListDisplayComponent implements OnInit {
     this.playlist = this.json.playlists
   }
 
-  appleplaylist(){
-
-    for (let i = 0; i < 11; i++) {
-      this.Playlist.push({title: "pog"+i, owner: "josh", source: "apple"})
-    }
-
-    console.log("apple playlist created");
-  }
-
-  spotifyplaylist(){
-
-    for (let i = 0; i < 11; i++) {
-      this.Playlist.push({title: "nice"+i, owner: "josh", source: "spotify"})
-    }
-
-    console.log("spotify playlist created");
-  }
 
 }

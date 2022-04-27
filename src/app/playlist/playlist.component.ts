@@ -11,7 +11,7 @@ export class PlaylistComponent implements OnInit, OnChanges {
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() playlist = [];
 
-  title = '';
+  @Input() title = '';
   @Input() owner = '';
   @Input() source = '';
   @Input() songs_visible = false;
@@ -23,7 +23,7 @@ export class PlaylistComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.title = this.playlist[0];
+    //this.title = this.playlist[0];
     //this.songs_visible = false;
   }
 

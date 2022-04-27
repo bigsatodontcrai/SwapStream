@@ -10,9 +10,6 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./streaming-api.component.css']
 })
 export class StreamingAPIComponent implements OnInit {
-
-  
-  
   token = '';
   spotify : any;
 
