@@ -1,0 +1,10 @@
+<div class="playlist" (click) = "dropDown()">
+<div class="title"> {{ title }} </div> 
+<div class="owner"> {{ owner }} </div> 
+<div class="source"> {{ source }} </div>
+</div>
+<div cdkDropListGroup>
+    <app-songs *ngFor="let items of playlist | slice:2" [song]="items[0]" [artist]="items[1]"
+        [visible]="songs_visible && selected" [addable]="addable">
+    </app-songs>
+</div>

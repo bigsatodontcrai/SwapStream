@@ -1,3 +1,7 @@
 
 <input type = "text" #box (keyup.enter)="onEnter(box.value)">
 <button type="search" (click)="onEnter(box.value)">search</button>
+<select (change)="onChoice($event)">
+    <option value="playlists">playlists</option>
+    <option value="songs">songs</option>
+</select>

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
+///  <reference types="@types/spotify-web-playback-sdk"/>
 
 @Component({
   selector: 'app-streaming-api',
@@ -6,30 +10,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./streaming-api.component.css']
 })
 export class StreamingAPIComponent implements OnInit {
+  token = '';
+  spotify : any;
 
-  
-  
+  constructor(public http:HttpClient) { }
 
+  getAuthToken() {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    let add = "/getAuth";
+    const url: string = 'http://127.0.0.1:5000' + add;
 
-  constructor() { }
+    return this.http.get(url, { responseType: 'json' });
+  }
+
+  saveToken() {
+    let tokenizer = this.getAuthToken();
+    let token: any;
+    tokenizer.subscribe(
+      (response: any) => {
+        token = response;
+        console.log(token);
+        this.token = token;
+      },
+      () => {
+        console.error('Request failed bozo!');
+
+      }
+    );
+  }
 
   ngOnInit(): void {
-    // let data = this.__getToken()
-    // console.log(data)
+    this.saveToken()
     
   }
 
-  // async __getToken() {
-    // const result = await fetch('https://accounts.spotify.com/api.token', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type' : 'application/x-www-form-urlencoded',
-    //     'Authorization' : 'Basic' + btoa(this.client_id + ':' + this.client_secret)
-    //   },
-    //   body: 'grant-type=client_credentials'
-    // })
-    // const data = await result.json();
-    // return data.access_token
-  // }
+  initPlayer(): void{
+  //   this.spotify = new window.Spotify.Player({
+  //     name: "SwapStream Player",
+  //     getOAuthToken: (callback: (t: string)=> void) => {
+  //       callback(this.token);
+  //     },
+  //     volume: 0.5
+  //  })
+
+  }
+  
 
 }

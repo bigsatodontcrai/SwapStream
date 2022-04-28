@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.2.0",
+    "@angular/cdk": "^13.3.4",
     "@angular/common": "~13.2.0",
     "@angular/compiler": "~13.2.0",
     "@angular/core": "~13.2.0",
@@ -19,6 +20,8 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@types/spotify-web-playback-sdk": "^0.1.12",
+    "cdk": "^2.21.1",
     "jose": "^4.6.1",
     "prettier": "^2.6.2",
     "rxjs": "~7.5.0",

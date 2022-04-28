@@ -1,1 +1,16 @@
-<p>songs works!</p>
+<div *ngIf = "visible" class="playlist">
+<div class="song">
+    <span>
+        {{song}}
+    </span>
+    <span>
+        {{artist}}
+    </span>
+    <div>
+        <button *ngIf="addable">add</button>
+        <button>play</button>
+    </div>
+    
+</div>
+
+</div>

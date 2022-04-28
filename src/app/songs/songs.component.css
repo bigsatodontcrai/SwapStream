@@ -1,0 +1,23 @@
+.song {
+    height: 50px;
+    width: 100 px;
+    background-color: rgb(53, 243, 148);
+    border: solid;
+    border-color: black;
+    border-radius: 1px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: justify;
+    font-family: Helvetica;
+    font: size 8;
+}
+
+.song:hover {
+    height: 50px;
+    width: 100 px;
+    background-color: rgb(41, 187, 114);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font: size 8;
+}
+
