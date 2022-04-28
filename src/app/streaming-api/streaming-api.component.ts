@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
-///  <reference types="@types/spotify-web-playback-sdk"/>
+declare var Spotify: any;
 
 @Component({
   selector: 'app-streaming-api',
