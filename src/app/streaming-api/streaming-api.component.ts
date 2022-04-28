@@ -44,13 +44,13 @@ export class StreamingAPIComponent implements OnInit {
   }
 
   initPlayer(): void{
-  //   this.spotify = new window.Spotify.Player({
-  //     name: "SwapStream Player",
-  //     getOAuthToken: (callback: (t: string)=> void) => {
-  //       callback(this.token);
-  //     },
-  //     volume: 0.5
-  //  })
+    this.spotify = new window.Spotify.Player({
+      name: "SwapStream Player",
+      getOAuthToken: (callback: (t: string)=> void) => {
+        callback(this.token);
+      },
+      volume: 0.5
+   })
 
   }
   
