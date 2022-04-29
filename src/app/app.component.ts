@@ -44,12 +44,11 @@ export class AppComponent{
     return this.http.get(url, {responseType:'json'});
   }
 
-  
+  loadApple(){
+    
+  }
 
   loadComponent(){
-    //const viewContainerRef = this.appLoginPage.viewContainerRef;
-    //viewContainerRef.clear();
-    //const componentRef = viewContainerRef.createComponent<WindowComponent>(WindowComponent)
     let thing = this.doThing();
     let item:any;
     thing.subscribe(
