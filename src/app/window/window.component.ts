@@ -16,6 +16,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
   @Input() data:any;
+  @Input() appleMusicKit: any;
   item : any;
   item2 : any;
   toggle =false;

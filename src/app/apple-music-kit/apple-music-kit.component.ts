@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as jose from 'jose';
 import { songArtDataType } from './song-art-data';
 import { ArtworkSource } from 'src/assets/artwork-source-enum'
-declare var MusicKit: any; 
+declare var MusicKit: any;
 
 @Component({
   selector: 'app-apple-music-kit',
@@ -12,14 +12,14 @@ declare var MusicKit: any;
 export class AppleMusicKitComponent implements OnInit {
 
   privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
-  appleMusicKit : any;
+  @Input() appleMusicKit: any;
   musicPlaying = false;
   musicAlreadyQueued = false;
   playButtonText = 'fa fa-play';
-  songArtData : songArtDataType;
+  songArtData: songArtDataType;
   currentQueue: any;
 
-  constructor() { 
+  constructor() {
     this.songArtData = {
       height: 2400,
       url: ' ',
@@ -28,16 +28,16 @@ export class AppleMusicKitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createdevtoken();
+    // this.createdevtoken();
   }
 
   // This is called during initializeAppleMusicKit in order to give the component access the MusicKit
-  setMusicKitInstance(kit: any): any {
+  setMusicKitInstance(kit: any) {
     this.appleMusicKit = kit;
   }
 
   async handlePlayButtonClicked() {
-    if (!this.musicAlreadyQueued) { 
+    if (!this.musicAlreadyQueued) {
       this.queueSongsFromUserStation(() => this.playPauseMusic());
     } else {
       this.playPauseMusic();
@@ -69,21 +69,21 @@ export class AppleMusicKitComponent implements OnInit {
       console.log(result);
       const playlistID = result['data']['data'][0]['id'];
       music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
-      .then((results: any) => {
-        music.playNext({song: results.data.data[0].id}).catch((error: any) => console.error(error));
-        music.playNext({song: results.data.data[1].id})
-        .then((queue: any) => {
-          console.log("Queue:");
-          console.log(queue);
-          this.displaySongArt(ArtworkSource.SONG, queue._queueItems[0].item);
+        .then((results: any) => {
+          music.playNext({ song: results.data.data[0].id }).catch((error: any) => console.error(error));
+          music.playNext({ song: results.data.data[1].id })
+            .then((queue: any) => {
+              console.log("Queue:");
+              console.log(queue);
+              this.displaySongArt(ArtworkSource.SONG, queue._queueItems[0].item);
+            })
+            .catch((error: any) => console.error(error));
         })
-        .catch((error: any) => console.error(error));
+        .catch((error: any) => {
+          console.error(error);
+        });
     })
-    .catch((error: any) => {
-      console.error(error);
-    });
-    })
-    .catch((error: any) => console.error(error));
+      .catch((error: any) => console.error(error));
   }
 
   displaySongArt(sourceType: ArtworkSource, payload: any) {
@@ -111,7 +111,7 @@ export class AppleMusicKitComponent implements OnInit {
           console.warn(`Something went wrong when retrieving the artwork for the current station: ${payload['data']['data'][0]['id']}.`);
         }
         break;
-    
+
       default:
         break;
     }
@@ -131,50 +131,49 @@ export class AppleMusicKitComponent implements OnInit {
       if (stationID !== undefined) {
         music.setQueue({ station: stationID }).then((queue: any) => {
           this.musicAlreadyQueued = true;
-          music.playNext({song: queue['_itemIDs'][0]})
-          .then(_callback())
-          .catch((error : any) => console.error(error));
+          music.playNext({ song: queue['_itemIDs'][0] })
+            .then(_callback())
+            .catch((error: any) => console.error(error));
         });
-        
+
       } else {
         console.error("Unable to retrieve station data.");
       }
     })
-    .catch((error: any) => console.error(error));
+      .catch((error: any) => console.error(error));
   }
 
-  async createdevtoken()
-  {
-    let datetime = Date.parse(Date())/1000;
-    const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
+  // async createdevtoken() {
+  //   let datetime = Date.parse(Date()) / 1000;
+  //   const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
-    await new jose.SignJWT({})
-    .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC"})
-    .setIssuer("QTM38LJQ3P")
-    .setIssuedAt(datetime)
-    .setExpirationTime('1d')
-    .sign(ecPrivateKey)
-    .then((jwt : string) => {
-      this.initializeAppleMusicKit(jwt);
-    });
-  }
+  //   await new jose.SignJWT({})
+  //     .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC" })
+  //     .setIssuer("QTM38LJQ3P")
+  //     .setIssuedAt(datetime)
+  //     .setExpirationTime('1d')
+  //     .sign(ecPrivateKey)
+  //     .then((jwt: string) => {
+  //       this.initializeAppleMusicKit(jwt);
+  //     });
+  // }
 
-  initializeAppleMusicKit(devToken: string) {
-    let music: any;
-    MusicKit.configure({
-    developerToken: devToken, //eyJhbGciOiJFUzI1NiIsImtpZCI6IlczU1pQRDMyUUMifQ.eyJpc3MiOiJRVE0zOExKUTNQIiwiaWF0IjoxNjQ5NzI2OTgzLCJleHAiOjE2NTE0NTQ5ODN9.5NYNeKqUBJCRLKhRdqhD3lFdIH02tnbk8RrW6LpinjH-EpVDF3lRfBwjjsrleXjK2l0QRKtmLGwBigWuc5bTaA
-    app: {
-        name: 'My Cool Web App',
-        build: '2022.4.11',
-    },
-    storefrontId: 'us'
-    }).then((instance: any) => {
-      music = instance;
-      music.authorize()
-      .then(() => this.setMusicKitInstance(music))
-      .catch(function(error: any) {
-        console.error(error);
-      });
-    });
-}
+  // initializeAppleMusicKit(devToken: string) {
+  //   let music: any;
+  //   MusicKit.configure({
+  //     developerToken: devToken,
+  //     app: {
+  //       name: 'My Cool Web App',
+  //       build: '2022.4.11',
+  //     },
+  //     storefrontId: 'us'
+  //   }).then((instance: any) => {
+  //     music = instance;
+  //     music.authorize()
+  //       .then(() => this.setMusicKitInstance(music))
+  //       .catch(function (error: any) {
+  //         console.error(error);
+  //       });
+  //   });
+  // }
 }
