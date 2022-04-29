@@ -17,7 +17,16 @@
     border: solid;
     border-width: 2px;
     background-color: rgb(0, 0, 0);
+    cursor: pointer;
+}
 
+.profile{
+    height: 50px;
+    width: auto;
+}
+
+.profile:hover{
+    cursor: pointer
 }
 
 .owner {

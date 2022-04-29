@@ -6,7 +6,9 @@
       (click)="select(i)" 
       [selected]="i==selected_list" 
       [title]="items[0]"
-      [imgsrc]="items[1].image">
+      [imgsrc]="items[1].image"
+      [profile]="items[1].profile_image">
+      
     </app-playlist>
     </div>
     <div cdkDropList *ngIf="navigate">

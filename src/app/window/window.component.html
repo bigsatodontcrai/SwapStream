@@ -5,14 +5,15 @@
 
 <div class="window">
     <div class="content">
-        <div>
-            <mat-grid-list cols="1" class="mat">
-                <mat-grid-tile>Profile</mat-grid-tile>
-                <mat-grid-tile>Following</mat-grid-tile>
-                <mat-grid-tile>Library</mat-grid-tile>
-                <mat-grid-tile>Settings</mat-grid-tile>
+        <div class="sidebar">
+            <mat-grid-list cols="1" class="mat" rowHeight="60px">
+                <mat-grid-tile class="tile">Profile</mat-grid-tile>
+                <mat-grid-tile class="tile">Following</mat-grid-tile>
+                <mat-grid-tile class="tile">Library</mat-grid-tile>
+                <mat-grid-tile class="tile">Settings</mat-grid-tile>
             
             </mat-grid-list>
+            
             <mat-divider [vertical]="true"></mat-divider>
         </div>
         
@@ -22,15 +23,16 @@
                <mat-grid-tile>Library</mat-grid-tile>
             </mat-grid-list> -->
             <app-list-display [json]="item" ></app-list-display>
+            <mat-divider [vertical]="true"></mat-divider>
         </div>
         
         <div>
-            <app-search-module (newItemEvent)="doSearch($event)" (otherItemEvent)="setToggle($event)"></app-search-module>
             
+            <app-search-module (newItemEvent)="doSearch($event)" (otherItemEvent)="setToggle($event)"></app-search-module>
             <!-- <app-list-display [json]="item2" [song_display]="toggle" [search]="true"></app-list-display> -->
             
             
-        <div *ngIf="toggle" class="overflow">
+        <div *ngIf="toggle" class="overflow" cdkDropList>
             <app-songs *ngFor="let items of query | slice:2" [song]="items[0]" [artist]="items[1]" [visible]="true"
                 [addable]="true">
             </app-songs>
@@ -38,6 +40,8 @@
         </div>
     </div>
 </div>
-<div>
-    <app-player-module class="player">Player</app-player-module>
+
+<div class="player">
+    <mat-divider></mat-divider>
+    <app-player-module></app-player-module>
 </div>

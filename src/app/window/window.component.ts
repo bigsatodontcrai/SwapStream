@@ -4,6 +4,7 @@ import { ListDisplayComponent } from '../list-display/list-display.component'
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 // import * as data from '../../assets/json/placeholder.json';
 
 @Component({

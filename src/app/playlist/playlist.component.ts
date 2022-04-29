@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
@@ -17,6 +18,7 @@ export class PlaylistComponent implements OnInit, OnChanges {
   @Input() songs_visible = false;
   @Input() addable = false;
   @Input() selected = false;
+  @Input() profile = '';
  
   constructor() { 
     

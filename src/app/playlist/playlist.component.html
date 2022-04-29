@@ -8,6 +8,11 @@
 
 <mat-card class="playlist" (click) = "dropDown()">
     <mat-card-header>
+        <div mat-card-avatar class="profile" >
+            <!-- [ngStyle]="{'background-image': 'url('profile')', 'background-size': 'cover' }" -->
+            <img class="profile" mat-card-image [src]="profile">        
+        </div>
+        
         <mat-card-title>{{owner}}</mat-card-title>
         <mat-card-subtitle>{{title}}</mat-card-subtitle>
     </mat-card-header>

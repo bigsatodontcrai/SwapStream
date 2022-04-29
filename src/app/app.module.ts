@@ -23,6 +23,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common'
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDividerModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule, 
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
