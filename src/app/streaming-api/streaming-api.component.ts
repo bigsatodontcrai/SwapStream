@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
-///  <reference types="@types/spotify-web-playback-sdk"/>
+declare var Spotify: any;
 
 @Component({
   selector: 'app-streaming-api',
@@ -18,7 +17,7 @@ export class StreamingAPIComponent implements OnInit {
   getAuthToken() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     let add = "/getAuth";
-    const url: string = 'http://127.0.0.1:5000' + add;
+    const url: string = 'http://127.0.0.1:8000' + add;
 
     return this.http.get(url, { responseType: 'json' });
   }

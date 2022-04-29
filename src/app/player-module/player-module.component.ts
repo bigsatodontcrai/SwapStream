@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PlayerModuleComponent implements OnInit {
   @Input() service = '';
+  @Input() appleMusicKit: any;
   toggleSpotify = false;
   toggleApple = false;
   constructor() { }
