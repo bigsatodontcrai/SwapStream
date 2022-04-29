@@ -17,7 +17,7 @@ export class StreamingAPIComponent implements OnInit {
   getAuthToken() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     let add = "/getAuth";
-    const url: string = 'http://127.0.0.1:5000' + add;
+    const url: string = 'http://127.0.0.1:8000' + add;
 
     return this.http.get(url, { responseType: 'json' });
   }
@@ -44,13 +44,13 @@ export class StreamingAPIComponent implements OnInit {
   }
 
   initPlayer(): void{
-    this.spotify = new window.Spotify.Player({
-      name: "SwapStream Player",
-      getOAuthToken: (callback: (t: string)=> void) => {
-        callback(this.token);
-      },
-      volume: 0.5
-   })
+  //   this.spotify = new window.Spotify.Player({
+  //     name: "SwapStream Player",
+  //     getOAuthToken: (callback: (t: string)=> void) => {
+  //       callback(this.token);
+  //     },
+  //     volume: 0.5
+  //  })
 
   }
   

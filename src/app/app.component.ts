@@ -39,7 +39,7 @@ export class AppComponent{
 
   doThing(){
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    const url: string = 'http://127.0.0.1:5000/spotify';
+    const url: string = 'http://127.0.0.1:8000/spotify';
     
     return this.http.get(url, {responseType:'json'});
   }
