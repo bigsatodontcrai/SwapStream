@@ -14,7 +14,18 @@ import { LoginPageDirective } from './login-page.directive';
 import { LoaderDirective } from './loader.directive';
 import { ListGeneratorDirective } from './list-generator.directive';
 import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card'
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component'
 
 
 @NgModule({
@@ -30,12 +41,24 @@ import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.compon
     LoginPageDirective,
     LoaderDirective,
     ListGeneratorDirective,
-    AppleMusicKitComponent
+    AppleMusicKitComponent,
+    ProfileComponent,
+    ProfileEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, 
+    MatSliderModule,
+    MatCardModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule, 
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import { ListDisplayComponent } from '../list-display/list-display.component'
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 // import * as data from '../../assets/json/placeholder.json';
 
 @Component({
@@ -18,6 +19,8 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   item : any;
   item2 : any;
   toggle =false;
+  query :string[] = []
+  open = false;
 
   constructor(public http: HttpClient) {
 
@@ -31,6 +34,13 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     } else{
       this.toggle = false;
     }
+  }
+
+  openLibrary(): void{
+    if(this.open==false)
+      this.open = true;
+    else
+      this.open = false;
   }
 
   getQuery(query: string) {
@@ -49,6 +59,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
         item = response;
         console.log(item);
         this.item2 = item;
+        this.query = item.query;
       },
       () => {
         console.error('Request failed bozo!');

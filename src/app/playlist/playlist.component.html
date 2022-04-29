@@ -1,10 +1,24 @@
-<div class="playlist" (click) = "dropDown()">
-<div class="title"> {{ title }} </div> 
+
+<!-- <div class="title"> {{ title }} </div> 
 <div class="owner"> {{ owner }} </div> 
-<div class="source"> {{ source }} </div>
-</div>
-<div cdkDropListGroup>
-    <app-songs *ngFor="let items of playlist | slice:2" [song]="items[0]" [artist]="items[1]"
-        [visible]="songs_visible && selected" [addable]="addable">
-    </app-songs>
-</div>
+<div class="source"> {{ source }} </div> -->
+
+
+
+
+<mat-card class="playlist" (click) = "dropDown()">
+    <mat-card-header>
+        <div mat-card-avatar class="profile" >
+            <!-- [ngStyle]="{'background-image': 'url('profile')', 'background-size': 'cover' }" -->
+            <img class="profile" mat-card-image [src]="profile">        
+        </div>
+        
+        <mat-card-title>{{owner}}</mat-card-title>
+        <mat-card-subtitle>{{title}}</mat-card-subtitle>
+    </mat-card-header>
+    <img class="image" mat-card-image [src]="imgsrc">
+    <!-- {{ title }} {{owner}} {{source}}-->
+    <mat-divider></mat-divider>
+    </mat-card>
+
+

@@ -1,23 +1,26 @@
 .song {
     height: 50px;
     width: 100 px;
-    background-color: rgb(53, 243, 148);
-    border: solid;
-    border-color: black;
-    border-radius: 1px;
+    background-color: black;
+    color: white;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: justify;
-    font-family: Helvetica;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     font: size 8;
+    overflow-y:scroll;
+}
+
+
+.btn {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    color: black
 }
 
 .song:hover {
-    height: 50px;
-    width: 100 px;
-    background-color: rgb(41, 187, 114);
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    font: size 8;
+    border: solid;
+    border-radius: 2px;
+    cursor: pointer;
+    
 }
 
