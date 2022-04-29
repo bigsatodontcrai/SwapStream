@@ -36,20 +36,11 @@ export class AppComponent {
     this.createdevtoken();
   }
 
-  // ngAfterViewChecked(){}
-
-  addChild() {
-    //let newChild = this.renderer.createElement('app-window');
-    //this.renderer.appendChild(this.div.nativeElement, newChild)
-    // this.appLoader.componentLoader()
-    //this.nservice.appendComponentToBody(WindowComponent)
-  }
-
-  doThing() {
+  initializeSpotify() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     const url: string = 'http://127.0.0.1:8000/spotify';
 
-    return this.http.get(url, { responseType: 'json' });
+    return this.http.get(url, { responseType: 'json', headers: headers });
   }
 
   async createdevtoken() {
@@ -68,12 +59,11 @@ export class AppComponent {
   }
 
   initializeAppleMusicKit(devToken: string) {
-    let music: any;
     MusicKit.configure({
       developerToken: devToken,
       app: {
-        name: 'My Cool Web App',
-        build: '2022.4.11',
+        name: 'Swapstream',
+        build: '1.0.0',
       },
       storefrontId: 'us'
     }).then((instance: any) => {
@@ -95,8 +85,8 @@ export class AppComponent {
       .catch((error: string) => console.error('Apple music failed to authorize' + error));
   }
 
-  loadComponent() {
-    let thing = this.doThing();
+  loadSpotify() {
+    let thing = this.initializeSpotify();
     let item: any;
     thing.subscribe({
       next: (response: any) => {

@@ -13,10 +13,12 @@
 <app-window *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit"></app-window>
 <div class="login" *ngIf="!userlogin">
     <div>
-        <button mat-button class = 'btn' (click)='loadComponent()'> <img class="spot" src="../../assets/images/Spotify_Logo_RGB_White.png"> </button>
+        <button mat-button class='btn' (click)='loadSpotify()'> <img class="spot"
+                src="../../assets/images/Spotify_Logo_RGB_White.png"> </button>
     </div>
     <div>
-        <button mat-button class = 'abtn' (click)='loadApple()'> <img class="spot" src="../../assets/images/Apple-Music-Emblem.png"> </button>
+        <button mat-button class='abtn' (click)='loadApple()'> <img class="spot"
+                src="../../assets/images/Apple-Music-Emblem.png"> </button>
     </div>
 </div>
 <!-- <mat-slider min="1" max="100" step="1" value="50"></mat-slider> -->
