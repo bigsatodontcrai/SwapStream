@@ -9,7 +9,7 @@
             <mat-grid-list cols="1" class="mat" rowHeight="60px">
                 <mat-grid-tile class="tile">Profile</mat-grid-tile>
                 <mat-grid-tile class="tile">Following</mat-grid-tile>
-                <mat-grid-tile class="tile">Library</mat-grid-tile>
+                <mat-grid-tile class="tile" (click)="openLibrary()">Library</mat-grid-tile>
                 <mat-grid-tile class="tile">Settings</mat-grid-tile>
             
             </mat-grid-list>
@@ -17,7 +17,7 @@
             <mat-divider [vertical]="true"></mat-divider>
         </div>
         
-        <div class="lib">
+        <div *ngIf="open" class="lib">
             
             <!-- <mat-grid-list cols="1" class="tile">
                <mat-grid-tile>Library</mat-grid-tile>

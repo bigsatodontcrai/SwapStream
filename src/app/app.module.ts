@@ -23,7 +23,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component'
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { CommonModule } from '@angular/common'
     LoginPageDirective,
     LoaderDirective,
     ListGeneratorDirective,
-    AppleMusicKitComponent
+    AppleMusicKitComponent,
+    ProfileComponent,
+    ProfileEditorComponent
   ],
   imports: [
     BrowserModule,
