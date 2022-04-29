@@ -14,31 +14,31 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class WindowComponent implements AfterViewInit, OnChanges {
 
-  @ViewChild(SearchModuleComponent, {static: true}) searchModule !: SearchModuleComponent;
-  @Input() data:any;
+  @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @Input() data: any;
   @Input() appleMusicKit: any;
-  item : any;
-  item2 : any;
-  toggle =false;
-  query :string[] = []
+  item: any;
+  item2: any;
+  toggle = false;
+  query: string[] = []
   open = false;
 
   constructor(public http: HttpClient) {
 
   }
 
-  setToggle(toggle: string){
+  setToggle(toggle: string) {
     console.log(toggle)
-    if(toggle=='songs'){
+    if (toggle == 'songs') {
       this.toggle = true;
       console.log(this.toggle)
-    } else{
+    } else {
       this.toggle = false;
     }
   }
 
-  openLibrary(): void{
-    if(this.open==false)
+  openLibrary(): void {
+    if (this.open == false)
       this.open = true;
     else
       this.open = false;
@@ -52,24 +52,24 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     return this.http.get(url, { responseType: 'json' });
   }
 
-  doSearch(query: string){
+  doSearch(query: string) {
     let thing = this.getQuery(query);
-    let item : any;
-    thing.subscribe(
-      (response: any) => {
+    let item: any;
+    thing.subscribe({
+      next: (response: any) => {
         item = response;
         console.log(item);
         this.item2 = item;
         this.query = item.query;
       },
-      () => {
+      error: () => {
         console.error('Request failed bozo!');
 
       }
-    );
+    });
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.item = this.data;
   }
 
@@ -90,11 +90,11 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     // componentRef.instance.newItemEvent.subscribe(this.addItem("cake"))
     // const componentRef2 = viewContainerRef.createComponent<ListDisplayComponent>(ListDisplayComponent)
     // componentRef2.instance.json = this.item
-    
+
 
   }
 
-  
+
 
 
 }
