@@ -4,12 +4,40 @@
 <!-- <p>window works</p> -->
 
 <div class="window">
-    
-    <app-player-module ></app-player-module>
-    <app-search-module (newItemEvent) = "doSearch($event)" (otherItemEvent) = "setToggle($event)"></app-search-module>
-    
-    <app-list-display [json] = "item"></app-list-display>
-    <app-list-display [json] = "item2" [song_display] = "toggle" [search] = "true"></app-list-display>
-    
+    <div class="content">
+        <div>
+            <mat-grid-list cols="1" class="mat">
+                <mat-grid-tile>Profile</mat-grid-tile>
+                <mat-grid-tile>Following</mat-grid-tile>
+                <mat-grid-tile>Library</mat-grid-tile>
+                <mat-grid-tile>Settings</mat-grid-tile>
+            
+            </mat-grid-list>
+            <mat-divider [vertical]="true"></mat-divider>
+        </div>
+        
+        <div class="lib">
+            
+            <!-- <mat-grid-list cols="1" class="tile">
+               <mat-grid-tile>Library</mat-grid-tile>
+            </mat-grid-list> -->
+            <app-list-display [json]="item" ></app-list-display>
+        </div>
+        
+        <div>
+            <app-search-module (newItemEvent)="doSearch($event)" (otherItemEvent)="setToggle($event)"></app-search-module>
+            
+            <!-- <app-list-display [json]="item2" [song_display]="toggle" [search]="true"></app-list-display> -->
+            
+            
+        <div *ngIf="toggle" class="overflow">
+            <app-songs *ngFor="let items of query | slice:2" [song]="items[0]" [artist]="items[1]" [visible]="true"
+                [addable]="true">
+            </app-songs>
+        </div>
+        </div>
+    </div>
 </div>
-
+<div>
+    <app-player-module class="player">Player</app-player-module>
+</div>

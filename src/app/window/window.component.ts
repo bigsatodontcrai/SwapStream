@@ -18,6 +18,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   item : any;
   item2 : any;
   toggle =false;
+  query :string[] = []
 
   constructor(public http: HttpClient) {
 
@@ -49,6 +50,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
         item = response;
         console.log(item);
         this.item2 = item;
+        this.query = item.query;
       },
       () => {
         console.error('Request failed bozo!');

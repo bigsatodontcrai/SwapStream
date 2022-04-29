@@ -1,11 +1,49 @@
 .window {
-    width: 100vw;
-    height: 90vh;
     display: grid;
     justify-items: center;
-    grid-template-rows: 1fr 4fr;
-    grid-template-columns: 1fr 1fr;
-    background-color: teal;
+    background-color: black;
     margin-left: auto;
     margin-right: auto;
+    font: white;
+}
+
+.lib {
+    display: grid;
+}
+
+.overflow {
+    height: 1000px;
+    overflow-y: scroll
+}
+
+.content {
+    width: 100vw;
+    display: grid;
+    justify-items: left;
+    grid-template-columns: 1fr 2fr 2fr;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading {
+    width: 100vw;
+    height: 20vh;
+    justify-items: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mat{
+    background-color: black;
+    color: white;
+    width: 100px;
+    height: 500px;
+}
+
+.tile{
+    background-color: black;
+    color: white;
+    width: 100px;
+    
 }

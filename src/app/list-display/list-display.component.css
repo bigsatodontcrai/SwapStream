@@ -1,11 +1,26 @@
 .lists {
-    width: 40vw;
-    height: 70vh;
-    background-color: rgb(0, 239, 239);
+    height: 2000px;
+    background-color: black;
+    
     overflow-y: scroll;
     border:3px solid rgb(0, 0, 0);
 }
 
+.songlist {
+    height: 500px;
+    background-color: black;
+    overflow-y: scroll;
+    border:3px solid rgb(0, 0, 0);
+}
+
+.btn {
+    background-color: blueviolet;
+    color: white
+}
+.tmb{
+    height: 100px;
+    width: 100px;
+}
 .top {
     grid-template-columns: 1fr 1fr 1fr
 }
@@ -18,4 +33,9 @@
 .title {
     margin-left: auto;
     margin-right: auto;
+}
+
+.head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

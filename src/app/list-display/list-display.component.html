@@ -1,12 +1,35 @@
+
 <div class="lists">
-  <div *ngIf="song_display==false && search==false">
+    <div *ngIf="!navigate">
     <app-playlist *ngFor="let items of json.playlists; let i=index;" [playlist]="items" [owner]="items[1].info[0].name"
-      [source]="items[1].info[0].service" (click)="select(i)" [selected]="i==selected_list" [title]="items[0]">
+      [source]="items[1].info[0].service" 
+      (click)="select(i)" 
+      [selected]="i==selected_list" 
+      [title]="items[0]"
+      [imgsrc]="items[1].image">
     </app-playlist>
-  </div>
-  <div *ngIf="song_display">
-    <app-playlist [songs_visible]="true" [selected]="true" [playlist]="json.query" [addable]="true"></app-playlist>
-  </div>
+    </div>
+    <div cdkDropList *ngIf="navigate">
+      <mat-card class="head">
+        <div>
+          <mat-card-title>{{song_list[0]}}</mat-card-title>
+          <mat-card-subtitle>{{selected_owner}}</mat-card-subtitle>
+          <button mat-button (click)="goBack()" class="btn">Back</button>
+        </div>
+        <div>
+          <img mat-card-image [src]="selected_img" class="tmb">
+        </div>
+        
+        
+      </mat-card>
+      <div class="songlist">
+        <app-songs *ngFor="let items of song_list | slice:2" [song]="items[0]" [artist]="items[1]" [visible]="true"
+          [addable]="false" cdkDrag>
+        </app-songs>
+      </div>
+      
+    </div>
+ 
   
 
   <!-- <li *ngFor="let playlist of Playlist" class="playlist">

@@ -10,7 +10,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 export class PlaylistComponent implements OnInit, OnChanges {
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() playlist = [];
-
+  @Input() imgsrc = '';
   @Input() title = '';
   @Input() owner = '';
   @Input() source = '';
