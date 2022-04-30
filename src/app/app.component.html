@@ -10,7 +10,7 @@
 
 <ng-template appLoginPage></ng-template>
 <!--<app-apple-music-kit></app-apple-music-kit>-->
-<app-window *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit"></app-window>
+<app-window *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit" [isAM]="isAM"></app-window>
 <div class="login" *ngIf="!userlogin">
     <div>
         <button mat-button class='btn' (click)='loadSpotify()'> <img class="spot"

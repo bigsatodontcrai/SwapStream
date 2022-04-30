@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AppleMusicKitComponent } from '../apple-music-kit/apple-music-kit.component';
+import { PlayerModuleComponent } from '../player-module/player-module.component';
 // import * as data from '../../assets/json/placeholder.json';
 
 @Component({
@@ -18,8 +19,12 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @ViewChild(AppleMusicKitComponent, {static: true}) kitModule !: AppleMusicKitComponent;
   @ViewChild(ListDisplayComponent, { static: true}) listDisplayModule !: ListDisplayComponent;
+  @ViewChild(PlayerModuleComponent, {static: true}) playerModule !: PlayerModuleComponent;
   @Input() data: any;
   @Input() appleMusicKit: any;
+  @Input() isAM = false;
+  indices: any[] = [];
+  profile = false;
   item: any;
   item2: any;
   toggle = false;
@@ -80,11 +85,31 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   }
 
+  setIndices(event:any[]){
+    this.indices = event;
+    console.log(this.indices)
+    this.applePlayback(this.indices);
+  }
+
+  applePlayback(indices:any[]): void{
+    console.log(this.isAM)
+    if(this.isAM){
+      console.log("ting")
+      console.log(indices)
+      this.playerModule.playAppleList(indices);
+    }
+  }
+
   doNothing(json:any){
-    this.item = json
-    console.log("here")
-    console.log(json)
-    this.listDisplayModule.json = this.item
+    if(this.isAM){
+      this.item = json
+      console.log("here")
+      console.log(json)
+      console.log(this.isAM)
+
+      this.listDisplayModule.json = this.item
+    }
+    
   }
 
   addItem(newItem: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges, Output, EventEmitter } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import {playlist} from "../playlist"
 import { HttpClient } from '@angular/common/http';
@@ -21,6 +21,8 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   @Input() song_list2:any[] = [];
   playlist = [];
   navigate = false;
+  @Output() newItemEvent = new EventEmitter<any[]>()
+
   constructor() { }
 
   Playlist: playlist[] = []
@@ -31,6 +33,13 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     console.log("hi")
     console.log(this.json)
+  }
+
+  sendBackIndices(event:any): void {
+    let item:any[] = [];
+    item.push(this.selected_list)
+    item.push(event)
+    this.newItemEvent.emit(item)
   }
 
   select(index:number): void{

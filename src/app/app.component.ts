@@ -22,6 +22,7 @@ export class AppComponent {
   item: any;
   privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
   appleMusicKit: any;
+  isAM = false;
 
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
@@ -41,6 +42,13 @@ export class AppComponent {
   initializeSpotify() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     const url: string = 'http://127.0.0.1:5000/spotify';
+
+    return this.http.get(url, { responseType: 'json', headers: headers });
+  }
+
+  initializeSpotifyPlaylists() {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/spotify/playlists';
 
     return this.http.get(url, { responseType: 'json', headers: headers });
   }
@@ -80,6 +88,7 @@ export class AppComponent {
   }
 
   loadApple() {
+    this.isAM = true;
     console.log(this.appleMusicKit)
     this.appleMusicKit.authorize()
       .then(() => {
@@ -90,11 +99,27 @@ export class AppComponent {
   }
 
   loadSpotify() {
+    this.isAM = false;
     let thing = this.initializeSpotify();
     let item: any;
     thing.subscribe({
       next: (response: any) => {
         this.userlogin = true;
+        console.log(item);
+      },
+      error: () => {
+        console.error('Request failed bozo!');
+      }
+    });
+    this.loadSpotifyPlaylists()
+  }
+
+  loadSpotifyPlaylists() {
+    let thing = this.initializeSpotifyPlaylists();
+    let item: any;
+    thing.subscribe({
+      next: (response: any) => {
+        
         item = response;
         console.log(item);
         this.item = item;

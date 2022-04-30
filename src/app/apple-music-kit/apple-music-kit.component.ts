@@ -22,6 +22,7 @@ export class AppleMusicKitComponent implements OnInit {
   namelist: string[] = [];
   playlists: any[][] = [];
   json: { [k: string]: any } = {}
+  indices:any[] = [];
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -49,6 +50,11 @@ export class AppleMusicKitComponent implements OnInit {
     } else {
       this.playPauseMusic();
     }
+  }
+
+  playFromPlist(indices: any[]){
+    console.log("WE in it")
+    console.log(indices)
   }
 
   playPauseMusic() {
@@ -159,6 +165,7 @@ export class AppleMusicKitComponent implements OnInit {
       const playlistID = result['data']['data'][0]['id'];
       const playlists = result['data']['data'];
       playlists.forEach((value:any)=>{
+        console.log(value)
         //console.log(value.id)
         this.idlist.push(value.id)
         //console.log(value.attributes.name)
@@ -185,9 +192,7 @@ export class AppleMusicKitComponent implements OnInit {
         
         this.json['playlists'] = this.playlists
       })
-      console.log(this.idlist)
-      console.log(this.namelist)
-      console.log(this.playlists)
+      
     }).catch((error: any) => {
       console.error(error)
     });
