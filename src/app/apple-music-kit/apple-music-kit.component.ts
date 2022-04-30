@@ -25,6 +25,7 @@ export class AppleMusicKitComponent implements OnInit {
   json: { [k: string]: any } = {}
   indices:any[] = [];
   hreflist: string[] = [];
+  queue: any;
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -54,6 +55,16 @@ export class AppleMusicKitComponent implements OnInit {
     }
   }
 
+  async forward(){
+    const music = this.appleMusicKit;
+    music.skipToNextItem();
+  }
+
+  async back(){
+    const music = this.appleMusicKit;
+    music.skipToPreviousItem();
+  }
+
   async queueSongsFromPlaylists(plist_id:string, song: number, _callback: () => void){
     const music = this.appleMusicKit
     const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
@@ -62,11 +73,12 @@ export class AppleMusicKitComponent implements OnInit {
       this.musicAlreadyQueued = true;
       console.log("hi")
       console.log(music.queue)
-      queue = music.queue
+      this.queue = music.queue
       this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
       queue._dispatcher.subscribe(queue._dispatcher.events.nowPlayingItemDidChange, ()=>{
         this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
       })
+      
       //console.log(queue._dispatcher.subscribe())
       music.playNext({song: queue['_itemIDs'][0]})
         .then(_callback())
