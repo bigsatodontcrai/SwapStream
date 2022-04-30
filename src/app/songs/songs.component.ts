@@ -12,7 +12,9 @@ export class SongsComponent implements OnInit {
   @Input() visible = false;
   @Input() addable = false;
   @Input() index_in_list = 0;
+  @Input() url = '';
   @Output() newItemEvent = new EventEmitter<number>();
+  @Output() newURLEvent = new EventEmitter<any[]>();
 
   constructor() { }
 
@@ -25,6 +27,15 @@ export class SongsComponent implements OnInit {
 
   play(): void{
     this.newItemEvent.emit(this.index_in_list)
+  }
+
+  add(): void {
+    let item: any[] = [];
+    item.push(this.song)
+    item.push(this.artist)
+    item.push(this.url)
+    console.log(item)
+    this.newURLEvent.emit(item)
   }
 
 }

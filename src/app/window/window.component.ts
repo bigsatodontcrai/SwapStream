@@ -30,6 +30,8 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   toggle = false;
   query: string[] = []
   open = false;
+  create = false;
+  most_recent: any[] = [];
 
   constructor(public http: HttpClient) {
 
@@ -45,6 +47,14 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  toggleCreate(){
+    if(this.create){
+      this.create = false;
+    } else {
+      this.create = true;
+    }
+  }
+
   getService(): string {
     if (this.isAM) {
       return 'Apple';
@@ -53,10 +63,15 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   }
 
   openLibrary(): void {
+    if (this.create) {
+      this.create = false;
+      return; // will change this to an enumerator approach soon
+    }
     if (this.open == false)
       this.open = true;
     else
       this.open = false;
+    
   }
 
   getQuery(query: string) {
@@ -67,13 +82,19 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     return this.http.get(url, { responseType: 'json' });
   }
 
+  addSongToList(item: any){
+    console.log(item)
+    this.most_recent = item
+    //this.listDisplayModule.setSongList(item)
+  }
+
   doSearch(query: string) {
     let thing = this.getQuery(query);
     let item: any;
     thing.subscribe({
       next: (response: any) => {
         item = response;
-        //console.log(item);
+        console.log(item);
         this.item2 = item;
         this.query = item.query;
       },

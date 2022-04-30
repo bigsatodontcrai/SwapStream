@@ -19,7 +19,6 @@ export class PlaylistComponent implements OnInit, OnChanges {
   @Input() addable = false;
   @Input() selected = false;
   @Input() profile = '';
- 
   constructor() { 
     
   }

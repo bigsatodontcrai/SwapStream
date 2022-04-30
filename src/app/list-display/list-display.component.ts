@@ -14,6 +14,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json: any | object;
+  isAM = false;
   selected_list = 0;
   selected_owner = '';
   selected_img = '';
@@ -22,6 +23,13 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   playlist = [];
   navigate = false;
   @Output() newItemEvent = new EventEmitter<any[]>()
+  @Output() newCreateEvent = new EventEmitter<boolean>()
+
+  @Input() create = false; // activates create mode
+  @Input() song_urls: string[] = []; // will use ngFor in create mode
+  create_playlist_name = '';
+
+  @Input() most_recent: any[] = [];
 
   constructor() { }
 
@@ -32,6 +40,24 @@ export class ListDisplayComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     console.log("list-display change detected. New json value: " + JSON.stringify(this.json))
+    if(this.create==true){
+      if(this.navigate==true){
+        this.navigate = false;
+      }
+    }
+    console.log(this.song_list)
+    if(this.create && this.most_recent!=[]){
+      this.song_list.push(this.most_recent)
+      this.most_recent = []
+      this.song_list = this.song_list.filter((songs)=>{
+        return songs.length != 0
+      })
+      console.log(this.song_list)
+    }
+  }
+
+  setSongList(item: any[]){
+    this.song_list.push(item)
   }
 
   sendBackIndices(event: any): void {
@@ -62,6 +88,23 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     this.playlist = this.json.playlists
   }
 
+  spotifyAdd(){
+
+  }
+
+  appleAdd(){
+
+  }
+
+  onSubmit(){
+    if(!this.isAM){
+      this.spotifyAdd();
+    } else {
+      this.appleAdd();
+    }
+    this.newCreateEvent.emit(false)
+  }
+
   itemTest(): void {
 
   }
@@ -70,5 +113,8 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     this.navigate = false;
   }
 
+  createPlaylist(): void {
+
+  }
 
 }

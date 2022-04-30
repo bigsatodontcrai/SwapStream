@@ -11,7 +11,7 @@
                 <mat-grid-tile class="tile">Following</mat-grid-tile>
                 <mat-grid-tile class="tile" (click)="openLibrary()">Library</mat-grid-tile>
                 <mat-grid-tile class="tile">Settings</mat-grid-tile>
-                <mat-grid-tile class="tile">Create Playlist</mat-grid-tile>
+                <mat-grid-tile class="tile" (click)="toggleCreate()">Create Playlist</mat-grid-tile>
             </mat-grid-list>
 
             <mat-divider [vertical]="true"></mat-divider>
@@ -22,7 +22,7 @@
             <!-- <mat-grid-list cols="1" class="tile">
                <mat-grid-tile>Library</mat-grid-tile>
             </mat-grid-list> -->
-            <app-list-display [json]="item" (newItemEvent)="setIndices($event)"></app-list-display>
+            <app-list-display [json]="item" (newItemEvent)="setIndices($event)" [create]="create" (newCreateEvent)="toggleCreate()" [most_recent]="most_recent"></app-list-display>
             <mat-divider [vertical]="true"></mat-divider>
         </div>
 
@@ -38,7 +38,9 @@
 
 
             <div *ngIf="toggle" class="overflow" cdkDropList>
-                <app-songs *ngFor="let items of query | slice:2" [song]="items[0]" [artist]="items[1]" [visible]="true"
+                <app-songs *ngFor="let items of query | slice:2" [song]="items[0]" [artist]="items[1]" [url]="items[2]" [visible]="true"
+                    (newURLEvent)="addSongToList($event)"
+                    
                     [addable]="true">
                 </app-songs>
             </div>
