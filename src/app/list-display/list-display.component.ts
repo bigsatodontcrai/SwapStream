@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
-import {playlist} from "../playlist"
+import { playlist } from "../playlist"
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,16 +9,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit {
-  @Input() source?:string;
+  @Input() source?: string;
   @Input() search = false;
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
-  @Input() json : any | object;
+  @Input() json: any | object;
   selected_list = 0;
   selected_owner = '';
   selected_img = '';
-  song_list:any[] = [];
-  @Input() song_list2:any[] = [];
+  song_list: any[] = [];
+  @Input() song_list2: any[] = [];
   playlist = [];
   navigate = false;
   constructor() { }
@@ -28,7 +28,7 @@ export class ListDisplayComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  select(index:number): void{
+  select(index: number): void {
     this.selected_list = index;
     this.song_list = this.json.playlists[this.selected_list]
     console.log(this.json.playlists[this.selected_list])
@@ -49,8 +49,8 @@ export class ListDisplayComponent implements OnInit {
     this.playlist = this.json.playlists
   }
 
-  itemTest(): void{
-    
+  itemTest(): void {
+
   }
 
   goBack(): void {

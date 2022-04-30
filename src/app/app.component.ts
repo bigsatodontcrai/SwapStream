@@ -33,17 +33,33 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.createdevtoken();
+    this.createAppleDevToken();
   }
 
   initializeSpotify() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    const url: string = 'http://127.0.0.1:8000/spotify';
-
-    return this.http.get(url, { responseType: 'json', headers: headers });
+    const url: string = 'http://127.0.0.1:5000/spotify';
+    let item: any;
+    this.http.get(url, { headers: headers }).subscribe({
+      next: (response: any) => {
+        console.log('Response received');
+        this.userlogin = true;
+        item = response;
+        console.log(item);
+        this.item = item;
+        this.userlogin = true;
+      },
+      error: () => {
+        console.error('Request failed bozo!');
+      },
+      complete: () => {
+        console.log('complete');
+      }
+    }
+    );
   }
 
-  async createdevtoken() {
+  async createAppleDevToken() {
     let datetime = Date.parse(Date()) / 1000;
     const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
@@ -76,7 +92,6 @@ export class AppComponent {
   }
 
   loadApple() {
-    console.log(this.appleMusicKit)
     this.appleMusicKit.authorize()
       .then(() => {
         console.log("Apple Music Authorized Successfully");
@@ -86,20 +101,6 @@ export class AppComponent {
   }
 
   loadSpotify() {
-    let thing = this.initializeSpotify();
-    let item: any;
-    thing.subscribe({
-      next: (response: any) => {
-        this.userlogin = true;
-        item = response;
-        console.log(item);
-        this.item = item;
-        this.userlogin = true;
-      },
-      error: () => {
-        console.error('Request failed bozo!');
-      }
-    }
-    );
+    this.initializeSpotify();
   }
 }

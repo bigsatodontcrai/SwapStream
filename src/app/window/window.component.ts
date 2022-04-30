@@ -47,7 +47,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   getQuery(query: string) {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     let sp_query = query.replace(' ', '%20');
-    const url: string = 'http://127.0.0.1:8000/spotify/' + sp_query;
+    const url: string = 'http://127.0.0.1:5000/spotify/' + sp_query;
 
     return this.http.get(url, { responseType: 'json' });
   }
