@@ -25,7 +25,12 @@
         
       </mat-card>
       <div class="songlist">
-        <app-songs *ngFor="let items of song_list | slice:2" [song]="items[0]" [artist]="items[1]" [visible]="true"
+        <app-songs *ngFor="let items of song_list | slice:2; let i = index" 
+        [song]="items[0]" 
+        [artist]="items[1]" 
+        [visible]="true"
+        [index_in_list]="i"
+        (newItemEvent)="sendBackIndices($event)"
           [addable]="false" cdkDrag>
         </app-songs>
       </div>

@@ -22,8 +22,12 @@
             <!-- <mat-grid-list cols="1" class="tile">
                <mat-grid-tile>Library</mat-grid-tile>
             </mat-grid-list> -->
-            <app-list-display [json]="item" ></app-list-display>
+            <app-list-display [json]="item" (newItemEvent)="setIndices($event)"></app-list-display>
             <mat-divider [vertical]="true"></mat-divider>
+        </div>
+
+        <div *ngIf="profile">
+            
         </div>
         
         <div>
@@ -43,5 +47,5 @@
 
 <div class="player">
     <mat-divider></mat-divider>
-    <app-player-module [service]="'Apple'" [appleMusicKit]="appleMusicKit"></app-player-module>
+    <app-player-module (newItemEvent) = "doNothing($event)" [service]="'Apple'" [appleMusicKit]="appleMusicKit" [indices]="indices"></app-player-module>
 </div>

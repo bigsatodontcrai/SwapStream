@@ -7,6 +7,7 @@ import { ApiServiceService } from './api-service.service';
 import { HttpHeaders } from '@angular/common/http';
 import { SearchModuleComponent } from './search-module/search-module.component'
 import * as jose from 'jose';
+import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.component';
 declare var MusicKit: any;
 
 @Component({
@@ -21,10 +22,12 @@ export class AppComponent {
   item: any;
   privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
   appleMusicKit: any;
+  isAM = false;
 
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true}) amk !: AppleMusicKitComponent;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
 
   //@ViewChildren('child', {read: ElementRef}) childComp:QueryList<ElementRef>
@@ -39,24 +42,15 @@ export class AppComponent {
   initializeSpotify() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     const url: string = 'http://127.0.0.1:5000/spotify';
-    let item: any;
-    this.http.get(url, { headers: headers }).subscribe({
-      next: (response: any) => {
-        console.log('Response received');
-        this.userlogin = true;
-        item = response;
-        console.log(item);
-        this.item = item;
-        this.userlogin = true;
-      },
-      error: () => {
-        console.error('Request failed bozo!');
-      },
-      complete: () => {
-        console.log('complete');
-      }
-    }
-    );
+
+    return this.http.get(url, { responseType: 'json', headers: headers });
+  }
+
+  initializeSpotifyPlaylists() {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/spotify/playlists';
+
+    return this.http.get(url, { responseType: 'json', headers: headers });
   }
 
   async createAppleDevToken() {
@@ -85,13 +79,17 @@ export class AppComponent {
     }).then((instance: any) => {
       this.setMusicKitInstance(instance);
     });
+    
   }
 
   setMusicKitInstance(kit: any) {
     this.appleMusicKit = kit;
+    
   }
 
   loadApple() {
+    this.isAM = true;
+    console.log(this.appleMusicKit)
     this.appleMusicKit.authorize()
       .then(() => {
         console.log("Apple Music Authorized Successfully");
@@ -101,6 +99,36 @@ export class AppComponent {
   }
 
   loadSpotify() {
-    this.initializeSpotify();
+    this.isAM = false;
+    let thing = this.initializeSpotify();
+    let item: any;
+    thing.subscribe({
+      next: (response: any) => {
+        this.userlogin = true;
+        console.log(item);
+      },
+      error: (error: any) => {
+        console.error('Request failed bozo!: ' + error);
+      }
+    });
+    this.loadSpotifyPlaylists()
+  }
+
+  loadSpotifyPlaylists() {
+    let thing = this.initializeSpotifyPlaylists();
+    let item: any;
+    thing.subscribe({
+      next: (response: any) => {
+        
+        item = response;
+        console.log(item);
+        this.item = item;
+        this.userlogin = true;
+      },
+      error: (error: any) => {
+        console.error('Request failed bozo!: ' + error);
+      }
+    }
+    );
   }
 }

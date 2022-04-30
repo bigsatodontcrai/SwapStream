@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges, Output, EventEmitter } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import { playlist } from "../playlist"
 import { HttpClient } from '@angular/common/http';
@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './list-display.component.html',
   styleUrls: ['./list-display.component.css']
 })
-export class ListDisplayComponent implements OnInit {
-  @Input() source?: string;
+export class ListDisplayComponent implements OnInit, OnChanges {
+  @Input() source?:string;
   @Input() search = false;
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
@@ -21,6 +21,8 @@ export class ListDisplayComponent implements OnInit {
   @Input() song_list2: any[] = [];
   playlist = [];
   navigate = false;
+  @Output() newItemEvent = new EventEmitter<any[]>()
+
   constructor() { }
 
   Playlist: playlist[] = []
@@ -28,7 +30,19 @@ export class ListDisplayComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  select(index: number): void {
+  ngOnChanges(): void {
+    console.log("hi")
+    console.log(this.json)
+  }
+
+  sendBackIndices(event:any): void {
+    let item:any[] = [];
+    item.push(this.selected_list)
+    item.push(event)
+    this.newItemEvent.emit(item)
+  }
+
+  select(index:number): void{
     this.selected_list = index;
     this.song_list = this.json.playlists[this.selected_list]
     console.log(this.json.playlists[this.selected_list])

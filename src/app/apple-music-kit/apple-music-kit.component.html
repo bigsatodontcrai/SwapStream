@@ -1,8 +1,13 @@
+
 <div class="apple-music-player">
     <picture>
         <source srcset="{{songArtData.url}}" type="image/webp">
         <source srcset="{{songArtData.url}}">
         <img width="50" height="50" class="song-artwork" src="\assets\images\sound_icon.jpg" role="presentation" loading="lazy">
     </picture>
+    <button mat-button class="btn" (click)="back()">back</button>
     <div id="play" (click)="handlePlayButtonClicked()"><i class="{{playButtonText}}"></i></div>
+    <button mat-button class="btn" (click)="forward()">fwd</button>
+    
+    <!-- <button (click)="onLoad()">Test Playlists</button> -->
 </div>

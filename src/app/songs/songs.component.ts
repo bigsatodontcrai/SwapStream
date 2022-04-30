@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -11,6 +11,9 @@ export class SongsComponent implements OnInit {
   @Input() artist = '';
   @Input() visible = false;
   @Input() addable = false;
+  @Input() index_in_list = 0;
+  @Output() newItemEvent = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -18,6 +21,10 @@ export class SongsComponent implements OnInit {
 
   isVisible(): void {
     
+  }
+
+  play(): void{
+    this.newItemEvent.emit(this.index_in_list)
   }
 
 }
