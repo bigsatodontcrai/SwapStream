@@ -62,6 +62,12 @@ export class AppleMusicKitComponent implements OnInit {
       this.musicAlreadyQueued = true;
       console.log("hi")
       console.log(music.queue)
+      queue = music.queue
+      this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
+      queue._dispatcher.subscribe(queue._dispatcher.events.nowPlayingItemDidChange, ()=>{
+        this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
+      })
+      //console.log(queue._dispatcher.subscribe())
       music.playNext({song: queue['_itemIDs'][0]})
         .then(_callback())
         .catch((error: any) => console.error(error))
@@ -76,11 +82,13 @@ export class AppleMusicKitComponent implements OnInit {
     const song_id = indices[1]
     console.log(plist_id)
     this.queueSongsFromPlaylists(plist_id, song_id, ()=>this.playPauseMusic())
-    
+  
   }
 
+  
+
   playPauseMusic() {
-    this.testAppleFunctions();
+    //this.testAppleFunctions();
     const music = this.appleMusicKit;
     if (this.musicPlaying === true) {
       music.pause();
@@ -177,6 +185,10 @@ export class AppleMusicKitComponent implements OnInit {
       }
     })
       .catch((error: any) => console.error(error));
+  }
+
+  async getPlaylistCover(plist_id: string){
+
   }
 
   async getPlaylists() {
