@@ -27,7 +27,7 @@ export class AppComponent {
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
-  @ViewChild(AppleMusicKitComponent, { static: true}) amk !: AppleMusicKitComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true }) amk !: AppleMusicKitComponent;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
 
   //@ViewChildren('child', {read: ElementRef}) childComp:QueryList<ElementRef>
@@ -79,12 +79,12 @@ export class AppComponent {
     }).then((instance: any) => {
       this.setMusicKitInstance(instance);
     });
-    
+
   }
 
   setMusicKitInstance(kit: any) {
     this.appleMusicKit = kit;
-    
+
   }
 
   loadApple() {
@@ -119,7 +119,7 @@ export class AppComponent {
     let item: any;
     thing.subscribe({
       next: (response: any) => {
-        
+
         item = response;
         console.log(item);
         this.item = item;

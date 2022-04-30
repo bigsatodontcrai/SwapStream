@@ -11,34 +11,34 @@ export class PlayerModuleComponent implements OnInit, OnChanges {
   @Input() service = '';
   @Input() appleMusicKit: any;
   @Output() newItemEvent = new EventEmitter<any>();
-  @ViewChild(AppleMusicKitComponent, {static: false}) kitModule !: AppleMusicKitComponent;
-  json : any;
+  @ViewChild(AppleMusicKitComponent, { static: false }) kitModule !: AppleMusicKitComponent;
+  json: any;
   toggleSpotify = false;
   toggleApple = false;
-  @Input() indices:any[] = [];
+  @Input() indices: any[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  ngOnChanges(): void{
-    
+  ngOnChanges(): void {
+
   }
 
-  getAppleList(json: any){
+  getAppleList(json: any) {
     this.json = json
     this.sendAppleList()
   }
 
-  sendAppleList(){
-    
+  sendAppleList() {
+
     this.newItemEvent.emit(this.json)
-    
-      
+
+
   }
 
-  playAppleList(indices:any[]){
+  playAppleList(indices: any[]) {
     console.log(indices)
     this.kitModule.playFromPlist(indices)
   }

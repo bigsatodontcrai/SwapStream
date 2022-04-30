@@ -17,9 +17,9 @@ import { PlayerModuleComponent } from '../player-module/player-module.component'
 export class WindowComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
-  @ViewChild(AppleMusicKitComponent, {static: true}) kitModule !: AppleMusicKitComponent;
-  @ViewChild(ListDisplayComponent, { static: true}) listDisplayModule !: ListDisplayComponent;
-  @ViewChild(PlayerModuleComponent, {static: true}) playerModule !: PlayerModuleComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true }) kitModule !: AppleMusicKitComponent;
+  @ViewChild(ListDisplayComponent, { static: true }) listDisplayModule !: ListDisplayComponent;
+  @ViewChild(PlayerModuleComponent, { static: true }) playerModule !: PlayerModuleComponent;
   @Input() data: any;
   @Input() appleMusicKit: any;
   @Input() isAM = false;
@@ -85,29 +85,28 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   }
 
-  setIndices(event:any[]){
+  setIndices(event: any[]) {
     this.indices = event;
     console.log(this.indices)
     this.applePlayback(this.indices);
   }
 
-  applePlayback(indices:any[]): void{
+  applePlayback(indices: any[]): void {
     console.log(this.isAM)
-    if(this.isAM){
+    if (this.isAM) {
       console.log("ting")
       console.log(indices)
       this.playerModule.playAppleList(indices);
     }
   }
 
-  doNothing(json:any){
-    if(this.isAM){
+  doNothing(json: any) {
+    if (this.isAM) {
       this.item = json
       console.log("here")
       console.log(json)
       console.log(this.isAM)
     }
-    
   }
 
   addItem(newItem: string) {
