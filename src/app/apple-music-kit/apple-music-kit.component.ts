@@ -74,10 +74,11 @@ export class AppleMusicKitComponent implements OnInit {
       console.log("hi")
       console.log(music.queue)
       this.queue = music.queue
-      this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
-      queue._dispatcher.subscribe(queue._dispatcher.events.nowPlayingItemDidChange, ()=>{
-        this.displaySongArt(ArtworkSource.SONG, queue.currentItem)
+      console.log(this.queue._dispatcher.events.nowPlayingItemDidChange)
+      music.addEventListener('nowPlayingItemDidChange', ()=>{
+        this.displaySongArt(ArtworkSource.SONG, this.queue.currentItem)
       })
+      
       
       //console.log(queue._dispatcher.subscribe())
       music.playNext({song: queue['_itemIDs'][0]})
