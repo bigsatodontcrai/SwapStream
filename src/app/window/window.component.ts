@@ -106,8 +106,6 @@ export class WindowComponent implements AfterViewInit, OnChanges {
       console.log("here")
       console.log(json)
       console.log(this.isAM)
-
-      this.listDisplayModule.json = this.item
     }
     
   }
