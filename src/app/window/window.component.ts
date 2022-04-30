@@ -17,6 +17,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @ViewChild(AppleMusicKitComponent, {static: true}) kitModule !: AppleMusicKitComponent;
+  @ViewChild(ListDisplayComponent, { static: true}) listDisplayModule !: ListDisplayComponent;
   @Input() data: any;
   @Input() appleMusicKit: any;
   item: any;
@@ -82,6 +83,8 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   doNothing(json:any){
     this.item = json
     console.log("here")
+    console.log(json)
+    this.listDisplayModule.json = this.item
   }
 
   addItem(newItem: string) {

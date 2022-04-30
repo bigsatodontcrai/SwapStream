@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import {playlist} from "../playlist"
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './list-display.component.html',
   styleUrls: ['./list-display.component.css']
 })
-export class ListDisplayComponent implements OnInit {
+export class ListDisplayComponent implements OnInit, OnChanges {
   @Input() source?:string;
   @Input() search = false;
   @Input() song_display = false;
@@ -26,6 +26,11 @@ export class ListDisplayComponent implements OnInit {
   Playlist: playlist[] = []
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(): void {
+    console.log("hi")
+    console.log(this.json)
   }
 
   select(index:number): void{

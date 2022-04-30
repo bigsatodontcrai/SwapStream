@@ -35,6 +35,7 @@ export class AppleMusicKitComponent implements OnInit {
 
   ngOnInit(): void {
     // this.createdevtoken();
+    this.onLoad()
   }
 
   // This is called during initializeAppleMusicKit in order to give the component access the MusicKit
@@ -152,7 +153,7 @@ export class AppleMusicKitComponent implements OnInit {
 
   async getPlaylists() {
     const music = this.appleMusicKit;
-    return music.api.music('/v1/me/library/playlists').then((result: any) => {
+    music.api.music('/v1/me/library/playlists').then((result: any) => {
       console.log("Playlists:");
       console.log(result);
       const playlistID = result['data']['data'][0]['id'];
@@ -180,7 +181,7 @@ export class AppleMusicKitComponent implements OnInit {
         this.playlists.push(temp)
       });
       
-      this.populatePlaylists().then(()=>{
+      return this.populatePlaylists().then(()=>{
         
         this.json['playlists'] = this.playlists
       })
@@ -215,12 +216,16 @@ export class AppleMusicKitComponent implements OnInit {
     })
     return Promise.all(promises).then(()=>{
       console.log(this.playlists)
+      console.log("event")
+      this.newItemEvent.emit(this.json)
     })
   }
 
   onLoad(){
     this.getPlaylists().then(()=>{
-      this.newItemEvent.emit(this.json)
+      console.log("here")
+      console.log(this.json)
+      
     }).catch(()=>{
       console.error("Couldn't get lists")
     })

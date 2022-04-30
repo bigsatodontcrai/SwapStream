@@ -7,6 +7,7 @@ import { ApiServiceService } from './api-service.service';
 import { HttpHeaders } from '@angular/common/http';
 import { SearchModuleComponent } from './search-module/search-module.component'
 import * as jose from 'jose';
+import { AppleMusicKitComponent } from './apple-music-kit/apple-music-kit.component';
 declare var MusicKit: any;
 
 @Component({
@@ -25,6 +26,7 @@ export class AppComponent {
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true}) amk !: AppleMusicKitComponent;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
 
   //@ViewChildren('child', {read: ElementRef}) childComp:QueryList<ElementRef>
@@ -74,6 +76,7 @@ export class AppComponent {
 
   setMusicKitInstance(kit: any) {
     this.appleMusicKit = kit;
+    
   }
 
   loadApple() {
