@@ -18,12 +18,12 @@ export class SearchModuleComponent implements OnInit {
 
   onEnter(value: string) { 
     this.newItemEvent.emit(value)
-    console.log(value)
-    console.log("king")
+    // console.log(value)
+    // console.log("king")
     }
   onChoice(event: any) {
     let value = event.target.value
     this.otherItemEvent.emit(value)
-    console.log(value)
+    // console.log(value)
   }
 }

@@ -39,7 +39,7 @@ export class PlayerModuleComponent implements OnInit, OnChanges {
   }
 
   playAppleList(indices: any[]) {
-    console.log(indices)
+    //console.log(indices)
     this.kitModule.playFromPlist(indices)
   }
 

@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit, OnChanges {
-  @Input() source?:string;
+  @Input() source?: string;
   @Input() search = false;
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
@@ -31,35 +31,34 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log("hi")
-    console.log(this.json)
+    console.log("list-display change detected. New json value: " + JSON.stringify(this.json))
   }
 
-  sendBackIndices(event:any): void {
-    let item:any[] = [];
+  sendBackIndices(event: any): void {
+    let item: any[] = [];
     item.push(this.selected_list)
     item.push(event)
     this.newItemEvent.emit(item)
   }
 
-  select(index:number): void{
+  select(index: number): void {
     this.selected_list = index;
     this.song_list = this.json.playlists[this.selected_list]
-    console.log(this.json.playlists[this.selected_list])
+    //console.log(this.json.playlists[this.selected_list])
     this.navigate = true;
     const item = this.song_list[1]
-    console.log(item.info)
+    //console.log(item.info)
     this.selected_owner = item.info[0].name
     this.selected_img = item.image
   }
 
   set(): void {
     //this.song_list2 = this.json.query
-    console.log(this.song_list2)
+    //console.log(this.song_list2)
   }
 
   done(): void {
-    console.log(this.json.playlists)
+    //console.log(this.json.playlists)
     this.playlist = this.json.playlists
   }
 

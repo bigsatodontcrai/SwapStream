@@ -89,7 +89,6 @@ export class AppComponent {
 
   loadApple() {
     this.isAM = true;
-    console.log(this.appleMusicKit)
     this.appleMusicKit.authorize()
       .then(() => {
         console.log("Apple Music Authorized Successfully");
@@ -105,6 +104,7 @@ export class AppComponent {
     thing.subscribe({
       next: (response: any) => {
         this.userlogin = true;
+        console.log("Item (called from loadSpotify()):")
         console.log(item);
       },
       error: (error: any) => {
@@ -121,6 +121,7 @@ export class AppComponent {
       next: (response: any) => {
 
         item = response;
+        console.log("item (from loadSpotifyPlaylists()")
         console.log(item);
         this.item = item;
         this.userlogin = true;

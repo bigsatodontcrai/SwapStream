@@ -1,1 +1,14 @@
-
+<div class="spotify-music-player">
+    <picture class="song-art">
+        <source srcset="{{songArtData.url}}" type="image/webp">
+        <source srcset="{{songArtData.url}}">
+        <img width="50" height="50" class="song-artwork" src="\assets\images\sound_icon.jpg" role="presentation"
+            loading="lazy">
+    </picture>
+    <div class="playback-control-button" id="back" (click)="handlePreviousSongButtonClicked()"><i
+            class="fa fa-backward"></i></div>
+    <div class="playback-control-button" id="play" (click)="handlePlayButtonClicked()"><i
+            class="{{playButtonText}}"></i></div>
+    <div class="playback-control-button" id="forward" (click)="handleNextSongButtonClicked()"><i
+            class="fa fa-forward"></i></div>
+</div>
