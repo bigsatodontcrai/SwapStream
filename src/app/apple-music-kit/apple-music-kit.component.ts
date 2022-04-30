@@ -21,11 +21,12 @@ export class AppleMusicKitComponent implements OnInit {
   idlist: string[] = [];
   global_id_list: string[] = [];
   namelist: string[] = [];
-  playlists: any[][] = [];
+  playlists : any[][] = [];
   json: { [k: string]: any } = {}
   indices:any[] = [];
   hreflist: string[] = [];
   queue: any;
+  obj: { [k: string]: any} = {}
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -148,6 +149,7 @@ export class AppleMusicKitComponent implements OnInit {
     switch (sourceType) {
       case ArtworkSource.SONG:
         artworkData = payload['attributes']['artwork'];
+        console.log(artworkData)
         if (artworkData !== undefined) {
           this.formatArtworkUrl(artworkData);
           this.songArtData = artworkData;
@@ -224,7 +226,7 @@ export class AppleMusicKitComponent implements OnInit {
         this.namelist.push(value.attributes.name)
         let temp: any[] = []
         temp.push(value.attributes.name)
-        let my_obj = {
+        this.obj = {
           info: [
             {
               name: 'Name',
@@ -235,7 +237,8 @@ export class AppleMusicKitComponent implements OnInit {
           image: '',
           profile_image: ''
         }
-        temp.push(my_obj)
+        
+        temp.push(this.obj)
         this.playlists.push(temp)
       });
       
@@ -256,9 +259,14 @@ export class AppleMusicKitComponent implements OnInit {
       promises.push(
       music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
         .then((results: any)=>{
-          //console.log(results)
-          const songlist = results['data']['data']
-          songlist.forEach((song:any) => {
+          let songlist = results['data']['data']
+          let songArt = songlist[0]['attributes']['artwork'];
+          this.formatArtworkUrl(songArt);
+          const url = songArt['url'];
+          this.obj['image'] = url;
+          this.playlists[index][1] = this.obj
+
+          songlist.forEach((song:any, j:number) => {
             let item:string[] = []
             item.push(song.attributes.name)
             item.push(song.attributes.artistName)
