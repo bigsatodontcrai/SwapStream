@@ -18,6 +18,9 @@ export class AppleMusicKitComponent implements OnInit {
   playButtonText = 'fa fa-play';
   songArtData: songArtDataType;
   currentQueue: any;
+  idlist: string[] = [];
+  namelist: string[] = [];
+  playlists: any[][] = [];
 
   constructor() {
     this.songArtData = {
@@ -70,6 +73,7 @@ export class AppleMusicKitComponent implements OnInit {
       const playlistID = result['data']['data'][0]['id'];
       music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
         .then((results: any) => {
+          console.log(results)
           music.playNext({ song: results.data.data[0].id }).catch((error: any) => console.error(error));
           music.playNext({ song: results.data.data[1].id })
             .then((queue: any) => {
@@ -142,6 +146,73 @@ export class AppleMusicKitComponent implements OnInit {
     })
       .catch((error: any) => console.error(error));
   }
+
+  getPlaylists() {
+    const music = this.appleMusicKit;
+    music.api.music('/v1/me/library/playlists').then((result: any) => {
+      console.log("Playlists:");
+      console.log(result);
+      const playlistID = result['data']['data'][0]['id'];
+      const playlists = result['data']['data'];
+      playlists.forEach((value:any)=>{
+        //console.log(value.id)
+        this.idlist.push(value.id)
+        //console.log(value.attributes.name)
+
+        this.namelist.push(value.attributes.name)
+        let temp: any[] = []
+        temp.push(value.attributes.name)
+        let my_obj = {
+          info: [
+            {
+              name: 'Name',
+              service: 'Apple Music',
+              id: 0
+            }
+          ],
+          image: '',
+          profile_image: ''
+        }
+        temp.push(my_obj)
+        this.playlists.push(temp)
+      });
+      
+      this.populatePlaylists()
+      console.log(this.idlist)
+      console.log(this.namelist)
+      console.log(this.playlists)
+    }).catch((error: any) => {
+      console.error(error)
+    });
+  }
+
+  populatePlaylists(){
+    const music = this.appleMusicKit
+    let promises:any[] = [];
+    this.idlist.forEach((playlistID, index)=>{
+      promises.push(
+      music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
+        .then((results: any)=>{
+          //console.log(results)
+          const songlist = results['data']['data']
+          songlist.forEach((song:any) => {
+            let item:string[] = []
+            item.push(song.attributes.name)
+            item.push(song.attributes.artistName)
+            this.playlists[index].push(item)
+          });
+          //this.playlists[index].push(results)
+          
+        })
+        .catch((error: any) => console.error(error))
+      )
+    })
+    Promise.all(promises).then(()=>{
+      console.log(this.playlists)
+    })
+  }
+
+  
 
   // async createdevtoken() {
   //   let datetime = Date.parse(Date()) / 1000;

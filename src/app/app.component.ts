@@ -38,7 +38,7 @@ export class AppComponent {
 
   initializeSpotify() {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    const url: string = 'http://127.0.0.1:8000/spotify';
+    const url: string = 'http://127.0.0.1:5000/spotify';
 
     return this.http.get(url, { responseType: 'json', headers: headers });
   }
@@ -69,6 +69,7 @@ export class AppComponent {
     }).then((instance: any) => {
       this.setMusicKitInstance(instance);
     });
+    
   }
 
   setMusicKitInstance(kit: any) {
