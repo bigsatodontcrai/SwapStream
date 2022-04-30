@@ -19,10 +19,12 @@ export class AppleMusicKitComponent implements OnInit {
   songArtData: songArtDataType;
   currentQueue: any;
   idlist: string[] = [];
+  global_id_list: string[] = [];
   namelist: string[] = [];
   playlists: any[][] = [];
   json: { [k: string]: any } = {}
   indices:any[] = [];
+  hreflist: string[] = [];
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -52,9 +54,29 @@ export class AppleMusicKitComponent implements OnInit {
     }
   }
 
+  async queueSongsFromPlaylists(plist_id:string, song: number, _callback: () => void){
+    const music = this.appleMusicKit
+    const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
+    this.musicPlaying = false;
+    music.setQueue({playlist: plist_id, startPosition: song}).then((queue: any)=>{
+      this.musicAlreadyQueued = true;
+      console.log("hi")
+      console.log(music.queue)
+      music.playNext({song: queue['_itemIDs'][0]})
+        .then(_callback())
+        .catch((error: any) => console.error(error))
+    }).catch((error: any) => console.error(error))
+      
+  }
+
   playFromPlist(indices: any[]){
     console.log("WE in it")
     console.log(indices)
+    const plist_id = this.global_id_list[indices[0]]
+    const song_id = indices[1]
+    console.log(plist_id)
+    this.queueSongsFromPlaylists(plist_id, song_id, ()=>this.playPauseMusic())
+    
   }
 
   playPauseMusic() {
@@ -166,7 +188,11 @@ export class AppleMusicKitComponent implements OnInit {
       const playlists = result['data']['data'];
       playlists.forEach((value:any)=>{
         console.log(value)
+        this.hreflist.push(value.href)
+        //console.log(value.href)
         //console.log(value.id)
+        //console.log(value.attributes.playParams.globalId)
+        this.global_id_list.push(value.attributes.playParams.globalId)
         this.idlist.push(value.id)
         //console.log(value.attributes.name)
 
