@@ -27,7 +27,7 @@ export class AppComponent {
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
-  @ViewChild(AppleMusicKitComponent, { static: true}) amk !: AppleMusicKitComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true }) amk !: AppleMusicKitComponent;
   // @ViewChild(LoaderDirective) appLoader !: LoaderDirective;
 
   //@ViewChildren('child', {read: ElementRef}) childComp:QueryList<ElementRef>
@@ -36,7 +36,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.createdevtoken();
+    this.createAppleDevToken();
   }
 
   initializeSpotify() {
@@ -53,7 +53,7 @@ export class AppComponent {
     return this.http.get(url, { responseType: 'json', headers: headers });
   }
 
-  async createdevtoken() {
+  async createAppleDevToken() {
     let datetime = Date.parse(Date()) / 1000;
     const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
@@ -79,17 +79,16 @@ export class AppComponent {
     }).then((instance: any) => {
       this.setMusicKitInstance(instance);
     });
-    
+
   }
 
   setMusicKitInstance(kit: any) {
     this.appleMusicKit = kit;
-    
+
   }
 
   loadApple() {
     this.isAM = true;
-    console.log(this.appleMusicKit)
     this.appleMusicKit.authorize()
       .then(() => {
         console.log("Apple Music Authorized Successfully");
@@ -105,10 +104,11 @@ export class AppComponent {
     thing.subscribe({
       next: (response: any) => {
         this.userlogin = true;
+        console.log("Item (called from loadSpotify()):")
         console.log(item);
       },
-      error: () => {
-        console.error('Request failed bozo!');
+      error: (error: any) => {
+        console.error('Request failed bozo!: ' + error);
       }
     });
     this.loadSpotifyPlaylists()
@@ -119,14 +119,15 @@ export class AppComponent {
     let item: any;
     thing.subscribe({
       next: (response: any) => {
-        
+
         item = response;
+        console.log("item (from loadSpotifyPlaylists()")
         console.log(item);
         this.item = item;
         this.userlogin = true;
       },
-      error: () => {
-        console.error('Request failed bozo!');
+      error: (error: any) => {
+        console.error('Request failed bozo!: ' + error);
       }
     }
     );

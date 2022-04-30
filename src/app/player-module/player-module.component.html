@@ -1,14 +1,2 @@
-
-<!-- <div class="player"></div> -->
-<div>
-
-</div>
-<div>
-    <button mat-button class="play">player placeholder</button>
-</div>
-<div>
-
-</div>
-
-<app-streaming-api *ngIf="service == 'Spotify'"></app-streaming-api>
-<app-apple-music-kit *ngIf="service == 'Apple'" [appleMusicKit]="appleMusicKit" (newItemEvent)="getAppleList($event)"></app-apple-music-kit>
+<app-streaming-api class="spotify-player" *ngIf="service == 'Spotify'"></app-streaming-api>
+<app-apple-music-kit class="apple-player" *ngIf="service == 'Apple'" [appleMusicKit]="appleMusicKit" (newItemEvent)="getAppleList($event)"></app-apple-music-kit>

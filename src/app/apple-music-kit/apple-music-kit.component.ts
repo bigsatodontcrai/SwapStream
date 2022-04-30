@@ -21,12 +21,12 @@ export class AppleMusicKitComponent implements OnInit {
   idlist: string[] = [];
   global_id_list: string[] = [];
   namelist: string[] = [];
-  playlists : any[][] = [];
+  playlists: any[][] = [];
   json: { [k: string]: any } = {}
-  indices:any[] = [];
+  indices: any[] = [];
   hreflist: string[] = [];
   queue: any;
-  obj: { [k: string]: any} = {}
+  obj: { [k: string]: any } = {}
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -50,60 +50,82 @@ export class AppleMusicKitComponent implements OnInit {
 
   async handlePlayButtonClicked() {
     if (!this.musicAlreadyQueued) {
-      this.queueSongsFromUserStation(() => this.playPauseMusic());
+      this.queueSongsFromUserStation(() => this.playPauseMusic()).catch((error: any) => console.error(error));
     } else {
       this.playPauseMusic();
     }
   }
 
-  async forward(){
+  async handleNextSongButtonClicked() {
     const music = this.appleMusicKit;
-    music.skipToNextItem();
+    music.skipToNextItem()
+      .then(() => {
+        this.musicPlaying = true;
+        this.playButtonText = 'fa fa-pause';
+        if (!music.queue.isEmpty) {
+          const currentSong = music.queue["_queueItems"][music.queue.position]["item"];
+          this.displaySongArt(ArtworkSource.SONG, currentSong)
+        }
+      })
+      .catch((error: any) => console.error(error));
   }
 
-  async back(){
+  async handlePreviousSongButtonClicked() {
     const music = this.appleMusicKit;
-    music.skipToPreviousItem();
+    music.skipToPreviousItem()
+      .then(() => {
+        this.musicPlaying = true;
+        this.playButtonText = 'fa fa-pause';
+        if (!music.queue.isEmpty) {
+          const currentSong = music.queue["_queueItems"][music.queue.position]["item"];
+          this.displaySongArt(ArtworkSource.SONG, currentSong)
+        }
+      })
+      .catch((error: any) => console.error(error));
   }
 
-  async queueSongsFromPlaylists(plist_id:string, song: number, _callback: () => void){
+  async queueSongsFromPlaylists(plist_id: string, song: number, _callback: () => void) {
     const music = this.appleMusicKit
     const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
     this.musicPlaying = false;
-    music.setQueue({playlist: plist_id, startPosition: song}).then((queue: any)=>{
+    music.setQueue({ playlist: plist_id, startPosition: song }).then((queue: any) => {
       this.musicAlreadyQueued = true;
-      console.log("hi")
-      console.log(music.queue)
+      // console.log(music.queue)
       this.queue = music.queue
-      console.log(this.queue._dispatcher.events.nowPlayingItemDidChange)
-      music.addEventListener('nowPlayingItemDidChange', ()=>{
+      // console.log(this.queue._dispatcher.events.nowPlayingItemDidChange)
+      music.addEventListener('nowPlayingItemDidChange', () => {
         this.displaySongArt(ArtworkSource.SONG, this.queue.currentItem)
       })
-      
-      
+
+
       //console.log(queue._dispatcher.subscribe())
-      music.playNext({song: queue['_itemIDs'][0]})
+      music.playNext({ song: queue['_itemIDs'][0] })
         .then(_callback())
         .catch((error: any) => console.error(error))
     }).catch((error: any) => console.error(error))
-      
+
   }
 
-  playFromPlist(indices: any[]){
-    console.log("WE in it")
-    console.log(indices)
+  playFromPlist(indices: any[]) {
+    // console.log("WE in it")
+    // console.log(indices)
     const plist_id = this.global_id_list[indices[0]]
     const song_id = indices[1]
-    console.log(plist_id)
-    this.queueSongsFromPlaylists(plist_id, song_id, ()=>this.playPauseMusic())
-  
+    // console.log(plist_id)
+    this.queueSongsFromPlaylists(plist_id, song_id, () => this.playPauseMusic())
+
   }
 
-  
-
   playPauseMusic() {
-    //this.testAppleFunctions();
     const music = this.appleMusicKit;
+    if (!music.queue.isEmpty) {
+      let pos = 0
+      if (music.queue.position > 0) { // for some reason it goes to -1 sometimes
+        pos = music.queue.position
+      }
+      const currentSong = music.queue["_queueItems"][pos]["item"];
+      this.displaySongArt(ArtworkSource.SONG, currentSong)
+    }
     if (this.musicPlaying === true) {
       music.pause();
       this.musicPlaying = false;
@@ -114,6 +136,7 @@ export class AppleMusicKitComponent implements OnInit {
       this.playButtonText = 'fa fa-pause';
     }
   }
+
 
   testAppleFunctions() {
     const music = this.appleMusicKit;
@@ -149,7 +172,7 @@ export class AppleMusicKitComponent implements OnInit {
     switch (sourceType) {
       case ArtworkSource.SONG:
         artworkData = payload['attributes']['artwork'];
-        console.log(artworkData)
+        // console.log(artworkData)
         if (artworkData !== undefined) {
           this.formatArtworkUrl(artworkData);
           this.songArtData = artworkData;
@@ -202,7 +225,7 @@ export class AppleMusicKitComponent implements OnInit {
       .catch((error: any) => console.error(error));
   }
 
-  async getPlaylistCover(plist_id: string){
+  async getPlaylistCover(plist_id: string) {
 
   }
 
@@ -211,10 +234,10 @@ export class AppleMusicKitComponent implements OnInit {
     music.api.music('/v1/me/library/playlists').then((result: any) => {
       console.log("Playlists:");
       console.log(result);
-      const playlistID = result['data']['data'][0]['id'];
+      //const playlistID = result['data']['data'][0]['id'];
       const playlists = result['data']['data'];
-      playlists.forEach((value:any)=>{
-        console.log(value)
+      playlists.forEach((value: any) => {
+        // console.log(value)
         this.hreflist.push(value.href)
         //console.log(value.href)
         //console.log(value.id)
@@ -237,61 +260,60 @@ export class AppleMusicKitComponent implements OnInit {
           image: '',
           profile_image: ''
         }
-        
+
         temp.push(this.obj)
         this.playlists.push(temp)
       });
-      
-      return this.populatePlaylists().then(()=>{
-        
+
+      return this.populatePlaylists().then(() => {
+
         this.json['playlists'] = this.playlists
       })
-      
+
     }).catch((error: any) => {
       console.error(error)
     });
   }
 
-  async populatePlaylists(){
+  async populatePlaylists() {
     const music = this.appleMusicKit
-    let promises:any[] = [];
-    this.idlist.forEach((playlistID, index)=>{
+    let promises: any[] = [];
+    this.idlist.forEach((playlistID, index) => {
       promises.push(
-      music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
-        .then((results: any)=>{
-          let songlist = results['data']['data']
-          let songArt = songlist[0]['attributes']['artwork'];
-          this.formatArtworkUrl(songArt);
-          const url = songArt['url'];
-          this.obj['image'] = url;
-          this.playlists[index][1] = this.obj
+        music.api.music(`/v1/me/library/playlists/${playlistID}/tracks`)
+          .then((results: any) => {
+            let songlist = results['data']['data']
+            let songArt = songlist[0]['attributes']['artwork'];
+            this.formatArtworkUrl(songArt);
+            const url = songArt['url'];
+            this.obj['image'] = url;
+            this.playlists[index][1] = this.obj
 
-          songlist.forEach((song:any, j:number) => {
-            let item:string[] = []
-            item.push(song.attributes.name)
-            item.push(song.attributes.artistName)
-            this.playlists[index].push(item)
-          });
-          //this.playlists[index].push(results)
-          
-        })
-        .catch((error: any) => console.error(error))
+            songlist.forEach((song: any, j: number) => {
+              let item: string[] = []
+              item.push(song.attributes.name)
+              item.push(song.attributes.artistName)
+              this.playlists[index].push(item)
+            });
+            //this.playlists[index].push(results)
+
+          })
+          .catch((error: any) => console.error(error))
       )
     })
-    return Promise.all(promises).then(()=>{
-      console.log(this.playlists)
-      console.log("event")
+    return Promise.all(promises).then(() => {
+      // console.log(this.playlists)
+      // console.log("event")
       this.newItemEvent.emit(this.json)
     })
   }
 
-  onLoad(){
-    this.getPlaylists().then(()=>{
-      console.log("here")
+  onLoad() {
+    this.getPlaylists().then(() => {
+      console.log("apple-music-kit json after calling getPlaylists:")
       console.log(this.json)
-      
-    }).catch(()=>{
-      console.error("Couldn't get lists")
+    }).catch((error: any) => {
+      console.error("Couldn't get lists. Error: " + error)
     })
   }
 

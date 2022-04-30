@@ -17,9 +17,9 @@ import { PlayerModuleComponent } from '../player-module/player-module.component'
 export class WindowComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
-  @ViewChild(AppleMusicKitComponent, {static: true}) kitModule !: AppleMusicKitComponent;
-  @ViewChild(ListDisplayComponent, { static: true}) listDisplayModule !: ListDisplayComponent;
-  @ViewChild(PlayerModuleComponent, {static: true}) playerModule !: PlayerModuleComponent;
+  @ViewChild(AppleMusicKitComponent, { static: true }) kitModule !: AppleMusicKitComponent;
+  @ViewChild(ListDisplayComponent, { static: true }) listDisplayModule !: ListDisplayComponent;
+  @ViewChild(PlayerModuleComponent, { static: true }) playerModule !: PlayerModuleComponent;
   @Input() data: any;
   @Input() appleMusicKit: any;
   @Input() isAM = false;
@@ -36,13 +36,20 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   }
 
   setToggle(toggle: string) {
-    console.log(toggle)
+    //console.log(toggle)
     if (toggle == 'songs') {
       this.toggle = true;
-      console.log(this.toggle)
+      //console.log(this.toggle)
     } else {
       this.toggle = false;
     }
+  }
+
+  getService(): string {
+    if (this.isAM) {
+      return 'Apple';
+    }
+    return 'Spotify'
   }
 
   openLibrary(): void {
@@ -66,7 +73,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     thing.subscribe({
       next: (response: any) => {
         item = response;
-        console.log(item);
+        //console.log(item);
         this.item2 = item;
         this.query = item.query;
       },
@@ -85,37 +92,34 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   }
 
-  setIndices(event:any[]){
+  setIndices(event: any[]) {
     this.indices = event;
-    console.log(this.indices)
+    //console.log(this.indices)
     this.applePlayback(this.indices);
   }
 
-  applePlayback(indices:any[]): void{
-    console.log(this.isAM)
-    if(this.isAM){
-      console.log("ting")
-      console.log(indices)
+  applePlayback(indices: any[]): void {
+    //console.log(this.isAM)
+    if (this.isAM) {
+      //console.log("ting")
+      //console.log(indices)
       this.playerModule.playAppleList(indices);
     }
   }
 
-  doNothing(json:any){
-    if(this.isAM){
+  doNothing(json: any) {
+    if (this.isAM) {
       this.item = json
-      console.log("here")
-      console.log(json)
-      console.log(this.isAM)
-
-      this.listDisplayModule.json = this.item
+      //console.log("here")
+      //console.log(json)
+      //console.log(this.isAM)
     }
-    
   }
 
   addItem(newItem: string) {
-    console.log("here")
-    console.log(newItem)
-
+    console.log(`addItem(${newItem}) was called.`);
+    //console.log("here")
+    //console.log(newItem)
   }
 
   loadComponent() {
