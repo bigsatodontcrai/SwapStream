@@ -310,44 +310,20 @@ export class AppleMusicKitComponent implements OnInit {
 
   onLoad() {
     this.getPlaylists().then(() => {
-      console.log("apple-music-kit json after calling getPlaylists:")
-      console.log(this.json)
+      console.log("apple-music-kit json after calling getPlaylists: " + JSON.stringify(this.json))
     }).catch((error: any) => {
       console.error("Couldn't get lists. Error: " + error)
     })
   }
 
-  // async createdevtoken() {
-  //   let datetime = Date.parse(Date()) / 1000;
-  //   const ecPrivateKey = await jose.importPKCS8(this.privateKeystring, 'ES256')
 
-  //   await new jose.SignJWT({})
-  //     .setProtectedHeader({ alg: 'ES256', kid: "W3SZPD32QC" })
-  //     .setIssuer("QTM38LJQ3P")
-  //     .setIssuedAt(datetime)
-  //     .setExpirationTime('1d')
-  //     .sign(ecPrivateKey)
-  //     .then((jwt: string) => {
-  //       this.initializeAppleMusicKit(jwt);
-  //     });
-  // }
+  searchAppleCatalog(searchTerm: string, searchType?: string, resultsLimit?: number) {
+    const types = searchType !== undefined ? searchType : "songs,albums,artists";
+    const limit = resultsLimit !== undefined && resultsLimit < 26 && resultsLimit > 1 ? resultsLimit : 25;
+    const music = this.appleMusicKit;
+    music.api.music(`/v1/catalog/us/search?types=${types}&term=${searchTerm}&limit=${limit}`)
+    .then((results: any) => console.log(results))
+    .catch((error: any) => console.error(error));
+  }
 
-  // initializeAppleMusicKit(devToken: string) {
-  //   let music: any;
-  //   MusicKit.configure({
-  //     developerToken: devToken,
-  //     app: {
-  //       name: 'My Cool Web App',
-  //       build: '2022.4.11',
-  //     },
-  //     storefrontId: 'us'
-  //   }).then((instance: any) => {
-  //     music = instance;
-  //     music.authorize()
-  //       .then(() => this.setMusicKitInstance(music))
-  //       .catch(function (error: any) {
-  //         console.error(error);
-  //       });
-  //   });
-  // }
 }

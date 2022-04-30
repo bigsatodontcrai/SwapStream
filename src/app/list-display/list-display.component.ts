@@ -31,7 +31,6 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log("list-display change detected. New json value: " + JSON.stringify(this.json))
   }
 
   sendBackIndices(event: any): void {
