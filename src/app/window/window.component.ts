@@ -5,6 +5,7 @@ import { SearchModuleComponent } from '../search-module/search-module.component'
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AppleMusicKitComponent } from '../apple-music-kit/apple-music-kit.component';
 // import * as data from '../../assets/json/placeholder.json';
 
 @Component({
@@ -15,6 +16,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 export class WindowComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
+  @ViewChild(AppleMusicKitComponent, {static: true}) kitModule !: AppleMusicKitComponent;
   @Input() data: any;
   @Input() appleMusicKit: any;
   item: any;
@@ -75,6 +77,11 @@ export class WindowComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
 
+  }
+
+  doNothing(json:any){
+    this.item = json
+    console.log("here")
   }
 
   addItem(newItem: string) {

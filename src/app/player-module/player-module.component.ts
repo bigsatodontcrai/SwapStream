@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -9,6 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PlayerModuleComponent implements OnInit {
   @Input() service = '';
   @Input() appleMusicKit: any;
+  @Output() newItemEvent = new EventEmitter<any>();
+  json : any;
   toggleSpotify = false;
   toggleApple = false;
   constructor() { }
@@ -19,6 +21,15 @@ export class PlayerModuleComponent implements OnInit {
     } else if(this.service == 'Apple') {
       this.toggleApple = true;
     }
+  }
+
+  getAppleList(json: any){
+    this.json = json
+    this.sendAppleList()
+  }
+
+  sendAppleList(){
+    this.newItemEvent.emit(this.json)
   }
 
 }

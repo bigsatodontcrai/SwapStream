@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import * as jose from 'jose';
 import { songArtDataType } from './song-art-data';
 import { ArtworkSource } from 'src/assets/artwork-source-enum'
@@ -21,6 +21,9 @@ export class AppleMusicKitComponent implements OnInit {
   idlist: string[] = [];
   namelist: string[] = [];
   playlists: any[][] = [];
+  json: { [k: string]: any } = {}
+
+  @Output() newItemEvent = new EventEmitter<any>();
 
   constructor() {
     this.songArtData = {
@@ -147,9 +150,9 @@ export class AppleMusicKitComponent implements OnInit {
       .catch((error: any) => console.error(error));
   }
 
-  getPlaylists() {
+  async getPlaylists() {
     const music = this.appleMusicKit;
-    music.api.music('/v1/me/library/playlists').then((result: any) => {
+    return music.api.music('/v1/me/library/playlists').then((result: any) => {
       console.log("Playlists:");
       console.log(result);
       const playlistID = result['data']['data'][0]['id'];
@@ -177,7 +180,10 @@ export class AppleMusicKitComponent implements OnInit {
         this.playlists.push(temp)
       });
       
-      this.populatePlaylists()
+      this.populatePlaylists().then(()=>{
+        
+        this.json['playlists'] = this.playlists
+      })
       console.log(this.idlist)
       console.log(this.namelist)
       console.log(this.playlists)
@@ -186,7 +192,7 @@ export class AppleMusicKitComponent implements OnInit {
     });
   }
 
-  populatePlaylists(){
+  async populatePlaylists(){
     const music = this.appleMusicKit
     let promises:any[] = [];
     this.idlist.forEach((playlistID, index)=>{
@@ -207,12 +213,18 @@ export class AppleMusicKitComponent implements OnInit {
         .catch((error: any) => console.error(error))
       )
     })
-    Promise.all(promises).then(()=>{
+    return Promise.all(promises).then(()=>{
       console.log(this.playlists)
     })
   }
 
-  
+  onLoad(){
+    this.getPlaylists().then(()=>{
+      this.newItemEvent.emit(this.json)
+    }).catch(()=>{
+      console.error("Couldn't get lists")
+    })
+  }
 
   // async createdevtoken() {
   //   let datetime = Date.parse(Date()) / 1000;
