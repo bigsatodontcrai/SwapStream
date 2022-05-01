@@ -104,7 +104,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     let item = { name: this.create_playlist_name, songs: this.song_list}
     const url: string = 'http://127.0.0.1:5000/spotify/add';
-    this.clear()
+    
     return this.http.post<object>(url, item);
   }
 
@@ -122,6 +122,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
       const subscriber = this.spotifyAdd();
       subscriber.subscribe({
         next: (response: any)=>{
+          this.clear()
           console.log(response)//response will be the new playlist info to push to the front of the list.
         }, error: () => {
           console.error("ting")
