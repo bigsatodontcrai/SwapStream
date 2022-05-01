@@ -88,7 +88,36 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     //this.listDisplayModule.setSongList(item)
   }
 
+  playlistGetter(query: string){
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    let sp_query = query.replace(' ', '%20');
+    const url: string = 'http://127.0.0.1:5000/search/user/' + sp_query;
+
+    return this.http.get(url, { responseType: 'json' });
+  }
+
+  searchDatabaseForPlaylists(query: string){
+    let item = this.playlistGetter(query)
+    item.subscribe({
+      next: (response: any) => {
+        console.log(response)
+        this.item2 = response 
+      }, error: (error: any) => {
+        console.error(error)
+      }
+    })
+  }
+
   doSearch(query: string) {
+    if(this.toggle && !this.isAM){
+      this.doSpotifySearch(query)
+    }
+    if(!this.toggle){
+      this.searchDatabaseForPlaylists(query)
+    }
+  }
+
+  doSpotifySearch(query: string) {
     let thing = this.getQuery(query);
     let item: any;
     thing.subscribe({
