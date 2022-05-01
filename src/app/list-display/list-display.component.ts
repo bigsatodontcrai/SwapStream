@@ -176,7 +176,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   }
 
   addSelectedPlaylist(): void{
-    if(!this.isAM){
+    if(!this.isAM){//technically, this can post either, but some fields need to be updated
       this.subscribePlaylist()
     }
   }
