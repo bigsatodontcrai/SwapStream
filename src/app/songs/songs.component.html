@@ -1,1 +1,25 @@
-<p>songs works!</p>
+<div *ngIf = "visible" class="playlist" cdkDrag>
+    <mat-card class="song">
+        <mat-card-subtitle>{{song}}</mat-card-subtitle>
+        <mat-card-subtitle>{{artist}}</mat-card-subtitle>
+        <!-- <mat-card-content>{{index_in_list}}</mat-card-content> -->
+        <div *ngIf="!addable"></div>
+        <button *ngIf="addable" mat-icon-button class="btn" (click)="add()">+</button>
+        <button mat-button class="btn" (click)="play()">play</button>
+    </mat-card>
+    <mat-divider></mat-divider>
+<!-- <div class="song">
+    <span>
+        {{song}}
+    </span>
+    <span>
+        {{artist}}
+    </span>
+    <div>
+        <button *ngIf="addable">add</button>
+        <button>play</button>
+    </div>
+    
+</div> -->
+
+</div>

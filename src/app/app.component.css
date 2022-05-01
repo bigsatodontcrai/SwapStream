@@ -1,5 +1,35 @@
 .btn {
-    height: 100px;
-    width: 100px;
-    background-color: pink
+    height: 50px;
+    width: 200px;
+    background-color: black;
+    opacity: 0.8;
+    transition: 0.3s;
+    
 }
+
+.abtn {
+    height: 50px;
+    width: 200px;
+    background-color: white;
+    opacity: 0.8;
+    transition: 0.3s;
+    
+}
+
+.spot {
+    height: 50px;
+    width: auto;
+}
+
+.login {
+    text-align: center;
+    display: flex;
+    align-content: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    margin: auto;
+    
+}
+
+.btn:hover {opacity: 1}
+.abtn:hover {opacity: 1}

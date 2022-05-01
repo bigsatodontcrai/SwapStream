@@ -1,8 +1,44 @@
 .lists {
-    width: 400px;
-    height: 400px;
-    background-color: yellow;
+    height: 664px;
+    background-color: black;
+    border:3px solid rgb(0, 0, 0);
+    overflow-y: scroll;
+}
+
+.form{
+    color: white;
+}
+
+.songlist {
+    height: 500px;
+    background-color: black;
+    overflow-y: scroll;
+    border:3px solid rgb(0, 0, 0);
+}
+
+.btn {
+    background-color: blueviolet;
+    color: white
+}
+.tmb{
+    height: 100px;
+    width: 100px;
+}
+.top {
+    grid-template-columns: 1fr 1fr 1fr
+}
+
+.owner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.head {
     display: grid;
-    overflow: scroll;
-    grid-template-rows: auto
+    grid-template-columns: 1fr 1fr;
 }

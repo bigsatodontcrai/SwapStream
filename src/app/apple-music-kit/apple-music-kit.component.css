@@ -1,0 +1,27 @@
+.apple-music-player {
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    min-height: 100px;
+    background-image: linear-gradient(#fb5c74, #fa243c);
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 999999;
+}
+
+.btn {
+    background-color: white;
+    color: black;
+}
+
+.playback-control-button {
+    margin: 5px;
+}
+
+.song-art {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: 0;
+    margin-left: 50px;
+}

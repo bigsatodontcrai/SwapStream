@@ -1,16 +1,59 @@
-<div class="lists">
-<app-playlist [json]="json"></app-playlist>
-<app-playlist [json]="json"></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
-<app-playlist></app-playlist>
+<div class="lists" *ngIf="!create">
+  <div *ngIf="!navigate">
+    <app-playlist *ngFor="let items of json.playlists; let i=index;" [playlist]="items" [owner]="items[1].info[0].name"
+      [source]="items[1].info[0].service" (click)="select(i)" [selected]="i==selected_list" [title]="items[0]"
+      [imgsrc]="items[1].image" [profile]="items[1].profile_image">
+
+    </app-playlist>
+  </div>
+  <div cdkDropList *ngIf="navigate">
+    <mat-card class="head">
+      <div>
+        <mat-card-title>{{song_list[0]}}</mat-card-title>
+        <mat-card-subtitle>{{selected_owner}}</mat-card-subtitle>
+        <button mat-button (click)="goBack()" class="btn">Back</button>
+        <button mat-button (click)="addSelectedPlaylist()" class="btn">Add</button>
+      </div>
+      <div>
+        <img mat-card-image [src]="selected_img" class="tmb">
+      </div>
+
+
+    </mat-card>
+    <div class="songlist">
+      <app-songs *ngFor="let items of song_list | slice:2; let i = index" [song]="items[0]" [artist]="items[1]"
+        [visible]="true" [index_in_list]="i" (newItemEvent)="sendBackIndices($event)" [addable]="false" cdkDrag>
+      </app-songs>
+    </div>
+
+  </div>
+
+
+
+  <!-- <li *ngFor="let playlist of Playlist" class="playlist">
+    <span class="title">{{playlist.title}}</span>
+    <span class="owner">{{playlist.owner}}</span>
+  </li> -->
 </div>
+
+<div class="lists" *ngIf="create">
+  <mat-form-field class="form">
+    <mat-label>Playlist Name</mat-label>
+    <input matInput #box (changes)="setName(box.value)">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Visibility</mat-label>
+    <mat-select>
+      <mat-option value="Public">Public</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <button mat-button type="submit" class="btn" (click)="onSubmit(box.value)">Submit</button>
+  <button mat-button class="btn" (click)="clear()">Clear</button>
+  <div class="songlist">
+    <app-songs *ngFor="let items of song_list; let i = index" [song]="items[0]" [artist]="items[1]"
+      [visible]="true" [index_in_list]="i" (newItemEvent)="sendBackIndices($event)" [addable]="false" cdkDrag>
+    </app-songs>
+  </div>
+</div>
+  
