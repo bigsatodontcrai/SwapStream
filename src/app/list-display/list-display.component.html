@@ -38,7 +38,7 @@
 <div class="lists" *ngIf="create">
   <mat-form-field class="form">
     <mat-label>Playlist Name</mat-label>
-    <input matInput>
+    <input matInput #box (changes)="setName(box.value)">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Visibility</mat-label>
@@ -47,8 +47,8 @@
     </mat-select>
   </mat-form-field>
   
-  <button mat-button type="submit" class="btn" (click)="onSubmit()">Submit</button>
-  
+  <button mat-button type="submit" class="btn" (click)="onSubmit(box.value)">Submit</button>
+  <button mat-button class="btn" (click)="clear()">Clear</button>
   <div class="songlist">
     <app-songs *ngFor="let items of song_list; let i = index" [song]="items[0]" [artist]="items[1]"
       [visible]="true" [index_in_list]="i" (newItemEvent)="sendBackIndices($event)" [addable]="false" cdkDrag>

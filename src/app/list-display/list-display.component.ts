@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, OnChanges, Output, EventEmitter } 
 import { SearchModuleComponent } from '../search-module/search-module.component'
 import { playlist } from "../playlist"
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-display',
@@ -24,6 +25,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   navigate = false;
   @Output() newItemEvent = new EventEmitter<any[]>()
   @Output() newCreateEvent = new EventEmitter<boolean>()
+  @Output() updateLibraryEvent = new EventEmitter<boolean>()
 
   @Input() create = false; // activates create mode
   @Input() song_urls: string[] = []; // will use ngFor in create mode
@@ -31,11 +33,20 @@ export class ListDisplayComponent implements OnInit, OnChanges {
 
   @Input() most_recent: any[] = [];
 
-  constructor() { }
+  constructor(public http:HttpClient) { }
 
   Playlist: playlist[] = []
 
   ngOnInit(): void {
+  }
+
+  clear(): void {
+    this.song_list = [];
+  }
+
+  setName(event: any): void {
+    this.create_playlist_name = event;
+    console.log(this.create_playlist_name)
   }
 
   ngOnChanges(): void {
@@ -89,16 +100,33 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   }
 
   spotifyAdd(){
-
+    console.log("sending")
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    let item = { name: this.create_playlist_name, songs: this.song_list}
+    const url: string = 'http://127.0.0.1:5000/spotify/add';
+    this.clear()
+    return this.http.post<object>(url, item);
   }
 
   appleAdd(){
 
   }
 
-  onSubmit(){
+  onSubmit(name: any){
+    this.create_playlist_name = name
+    if(name==''){
+      console.error("No Name")
+      return;
+    }
     if(!this.isAM){
-      this.spotifyAdd();
+      const subscriber = this.spotifyAdd();
+      subscriber.subscribe({
+        next: (response: any)=>{
+          console.log(response)//response will be the new playlist info to push to the front of the list.
+        }, error: () => {
+          console.error("ting")
+        }
+      })
     } else {
       this.appleAdd();
     }
