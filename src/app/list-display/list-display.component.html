@@ -12,6 +12,7 @@
         <mat-card-title>{{song_list[0]}}</mat-card-title>
         <mat-card-subtitle>{{selected_owner}}</mat-card-subtitle>
         <button mat-button (click)="goBack()" class="btn">Back</button>
+        <button mat-button (click)="addSelectedPlaylist()" class="btn">Add</button>
       </div>
       <div>
         <img mat-card-image [src]="selected_img" class="tmb">

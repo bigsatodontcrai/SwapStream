@@ -109,6 +109,34 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     return this.http.post<object>(url, item);
   }
 
+  getPlaylist(){
+
+  }
+
+  subscribePlaylist(){
+    let post_result = this.postPlaylist()
+    post_result.subscribe({
+      next: (results: any) => {
+        console.log(results)
+      }, error: (error: any) => {
+
+      }
+    })
+  }
+
+  postPlaylist(){
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    let plist = this.json.playlists[this.selected_list]
+    let obj = plist[1]
+    let songs = this.song_list.slice(2)
+    
+    let item = { plist_id: obj.plist_id, user_id: obj.info[0].id, songs: songs, name: plist[0], image: obj.image }
+    console.log(item)
+    const url: string = 'http://127.0.0.1:5000/post-playlist/';
+    return this.http.post<object>(url, item, { headers: headers});
+    
+  }
+
   appleAdd(){
 
   }
@@ -145,6 +173,12 @@ export class ListDisplayComponent implements OnInit, OnChanges {
 
   createPlaylist(): void {
 
+  }
+
+  addSelectedPlaylist(): void{
+    if(!this.isAM){
+      this.subscribePlaylist()
+    }
   }
 
 }
