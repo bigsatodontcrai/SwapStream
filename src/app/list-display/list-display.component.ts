@@ -69,6 +69,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
 
   setSongList(item: any[]){
     this.song_list.push(item)
+
   }
 
   sendBackIndices(event: any): void {
