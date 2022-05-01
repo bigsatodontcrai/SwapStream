@@ -27,6 +27,7 @@ export class AppleMusicKitComponent implements OnInit {
   hreflist: string[] = [];
   queue: any;
   obj: { [k: string]: any } = {}
+  appleUsername: string | undefined;
 
   @Output() newItemEvent = new EventEmitter<any>();
 
@@ -39,8 +40,19 @@ export class AppleMusicKitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.createdevtoken();
-    this.onLoad()
+    const music = this.appleMusicKit;
+    music.api.music('/v1/catalog/{{storefrontId}}/stations', {
+      'filter[identity]': 'personal',
+    })
+      .then((output: any) => this.appleUsername = output.data.data[0].attributes.name.split('’')[0])
+      .then(() => {
+        console.log(this.appleUsername);
+        this.getPlaylists()
+          .catch((error: any) => {
+            console.error("Couldn't get lists. Error: " + error)
+          })
+      })
+      .catch((error: any) => console.error(error));
   }
 
   // This is called during initializeAppleMusicKit in order to give the component access the MusicKit
@@ -250,7 +262,7 @@ export class AppleMusicKitComponent implements OnInit {
         this.obj = {
           info: [
             {
-              name: 'Name',
+              name: this.appleUsername !== undefined ? this.appleUsername : "Name",
               service: 'Apple Music',
               id: 0
             }
@@ -306,14 +318,6 @@ export class AppleMusicKitComponent implements OnInit {
     })
   }
 
-  onLoad() {
-    this.getPlaylists()
-      .catch((error: any) => {
-        console.error("Couldn't get lists. Error: " + error)
-      })
-  }
-
-
   searchAppleCatalog(searchTerm: string, searchType?: string, resultsLimit?: number) {
     const types = searchType !== undefined ? searchType : "songs,albums,artists";
     const limit = resultsLimit !== undefined && resultsLimit < 26 && resultsLimit > 1 ? resultsLimit : 25;
@@ -354,8 +358,8 @@ export class AppleMusicKitComponent implements OnInit {
           };
 
           const headers = {
-              'Authorization': `Bearer ${music.developerToken}`,
-              'Music-User-Token': `${music.musicUserToken}`
+            'Authorization': `Bearer ${music.developerToken}`,
+            'Music-User-Token': `${music.musicUserToken}`
           };
 
           const requestOptions: RequestInit = {
@@ -365,33 +369,33 @@ export class AppleMusicKitComponent implements OnInit {
           }
 
           fetch(`https://api.music.apple.com/v1/me/library/playlists`, requestOptions)
-          .then((response: any) => response.body)
-          .then(rb => {
-            const reader = rb.getReader();
-          
-            return new ReadableStream({
-              start(controller) {
-                function push() {
-                  reader.read().then( (read: any) => {
-                    if (read.done) {
-                      controller.close();
-                      return;
-                    }
-                    controller.enqueue(read.value);
-                    push();
-                  })
+            .then((response: any) => response.body)
+            .then(rb => {
+              const reader = rb.getReader();
+
+              return new ReadableStream({
+                start(controller) {
+                  function push() {
+                    reader.read().then((read: any) => {
+                      if (read.done) {
+                        controller.close();
+                        return;
+                      }
+                      controller.enqueue(read.value);
+                      push();
+                    })
+                  }
+                  push();
                 }
-                push();
-              }
-            });
-          })
-          .then(stream => {
-            return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
-          })
-          .then(result => {
-            const playlistCreationResponse = JSON.parse(result);
-            resolve(playlistCreationResponse.data[0].id);
-          })
+              });
+            })
+            .then(stream => {
+              return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+            })
+            .then(result => {
+              const playlistCreationResponse = JSON.parse(result);
+              resolve(playlistCreationResponse.data[0].id);
+            })
             .catch((error: any) => reject(error));
         })
         .catch((error: any) => reject(error));
