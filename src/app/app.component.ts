@@ -61,13 +61,14 @@ export class AppComponent {
 
   }
 
-  postUser(id: string, name: string, service: string){
+  postUser(id: string, name: string, service: string, pfp: string){
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
     const url: string = 'http://127.0.0.1:5000/add-user/';
     const item = {
       user_id: id,
       user_name: name,
-      service: service
+      service: service, 
+      pfp: pfp
     }
 
     return this.http.post(url, item)
@@ -130,7 +131,7 @@ export class AppComponent {
           next: (response: any) => {
             console.log(response)
           }, error: (error: any) => {
-            let userPost = this.postUser(item.user, item.username, item.service)
+            let userPost = this.postUser(item.user, item.username, item.service, item.pfp)
             userPost.subscribe({
               next: (response: any) => {
                 console.log(response)
