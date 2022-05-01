@@ -258,7 +258,7 @@ export class AppleMusicKitComponent implements OnInit {
             }
           ],
           image: '',
-          profile_image: ''
+          profile_image: 'blank'
         }
 
         temp.push(this.obj)

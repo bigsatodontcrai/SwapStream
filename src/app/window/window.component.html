@@ -36,7 +36,11 @@
             </app-search-module>
             <!-- <app-list-display [json]="item2" [song_display]="toggle" [search]="true"></app-list-display> -->
 
-
+            <div *ngIf="open && !toggle" class="lib">
+                <app-list-display [json]="item2" (newItemEvent)="setIndices($event)" [create]="false"></app-list-display>
+                <mat-divider [vertical]="true"></mat-divider>
+            </div>
+            
             <div *ngIf="toggle" class="overflow" cdkDropList>
                 <app-songs *ngFor="let items of query | slice:2" [song]="items[0]" [artist]="items[1]" [url]="items[2]" [visible]="true"
                     (newURLEvent)="addSongToList($event)"
