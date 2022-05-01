@@ -44,7 +44,7 @@ export class AppleMusicKitComponent implements OnInit {
     music.api.music('/v1/catalog/{{storefrontId}}/stations', {
       'filter[identity]': 'personal',
     })
-      .then((output: any) => this.appleUsername = output.data.data[0].attributes.name.split('’')[0])
+      .then((output: any) => this.appleUsername = output.data.data[0].attributes.name.split('’')[0]) // super scuffed hacky way of getting the username because APPLE DOES NOT GIVE IT TO YOU
       .then(() => {
         this.getPlaylists()
           .catch((error: any) => {
@@ -97,7 +97,7 @@ export class AppleMusicKitComponent implements OnInit {
 
   async queueSongsFromPlaylists(plist_id: string, song: number, _callback: () => void) {
     const music = this.appleMusicKit
-    const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
+    // const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
     this.musicPlaying = false;
     music.setQueue({ playlist: plist_id, startPosition: song }).then((queue: any) => {
       this.musicAlreadyQueued = true;
