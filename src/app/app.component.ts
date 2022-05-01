@@ -158,13 +158,12 @@ export class AppComponent {
       next: (response: any) => {
 
         item = response;
-        console.log("item (from loadSpotifyPlaylists()")
-        console.log(item);
+        console.log("item (from loadSpotifyPlaylists()): " + JSON.stringify(item));
         this.item = item;
         this.userlogin = true;
       },
       error: (error: any) => {
-        console.error('Request failed bozo!: ' + error);
+        console.error(error);
       }
     }
     );
