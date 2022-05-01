@@ -46,7 +46,6 @@ export class AppleMusicKitComponent implements OnInit {
     })
       .then((output: any) => this.appleUsername = output.data.data[0].attributes.name.split('’')[0])
       .then(() => {
-        console.log(this.appleUsername);
         this.getPlaylists()
           .catch((error: any) => {
             console.error("Couldn't get lists. Error: " + error)
