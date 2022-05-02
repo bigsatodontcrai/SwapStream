@@ -23,6 +23,7 @@ export class AppComponent {
   privateKeystring = '-----BEGIN PRIVATE KEY----- MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8OljcWCOgxqqeqfDzxLQhGi5ibIscIGvyBYMD76VuNCgCgYIKoZIzj0DAQehRANCAATcbMVuB26hZ81i8E0KuzMD3HmXgXSIXV2NXDaqeuQgRapIRwHTOAVkI5nERowNgODqDL1DXRmyOpUNgjXEsbWs -----END PRIVATE KEY-----';
   appleMusicKit: any;
   isAM = false;
+  backgroundGradientPosition = "top";
 
   @ViewChild('div') div!: ElementRef;
   @ViewChild(LoginPageDirective, { static: true }) appLoginPage !: LoginPageDirective;
@@ -158,15 +159,26 @@ export class AppComponent {
       next: (response: any) => {
 
         item = response;
-        console.log("item (from loadSpotifyPlaylists()")
-        console.log(item);
+        console.log("item (from loadSpotifyPlaylists()): " + JSON.stringify(item));
         this.item = item;
         this.userlogin = true;
       },
       error: (error: any) => {
-        console.error('Request failed bozo!: ' + error);
+        console.error(error);
       }
     }
     );
+  }
+
+  transitionBackground(service: string) {
+    if (service == "" || service == "none") {
+      this.backgroundGradientPosition = "top";
+    }
+    if (service == "spotify") {
+      this.backgroundGradientPosition = "right";
+    }
+    if (service == "apple") {
+      this.backgroundGradientPosition = "left";
+    }
   }
 }

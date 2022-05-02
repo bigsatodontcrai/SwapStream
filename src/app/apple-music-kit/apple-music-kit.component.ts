@@ -2,6 +2,9 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import * as jose from 'jose';
 import { songArtDataType } from './song-art-data';
 import { ArtworkSource } from 'src/assets/artwork-source-enum'
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 declare var MusicKit: any;
 
 @Component({
@@ -27,10 +30,11 @@ export class AppleMusicKitComponent implements OnInit {
   hreflist: string[] = [];
   queue: any;
   obj: { [k: string]: any } = {}
+  appleUsername: string | undefined;
 
   @Output() newItemEvent = new EventEmitter<any>();
 
-  constructor() {
+  constructor(public http:HttpClient) {
     this.songArtData = {
       height: 2400,
       url: ' ',
@@ -39,8 +43,18 @@ export class AppleMusicKitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.createdevtoken();
-    this.onLoad()
+    const music = this.appleMusicKit;
+    music.api.music('/v1/catalog/{{storefrontId}}/stations', {
+      'filter[identity]': 'personal',
+    })
+      .then((output: any) => this.appleUsername = output.data.data[0].attributes.name.split('’')[0]) // super scuffed hacky way of getting the username because APPLE DOES NOT GIVE IT TO YOU
+      .then(() => {
+        this.getPlaylists()
+          .catch((error: any) => {
+            console.error("Couldn't get lists. Error: " + error)
+          })
+      })
+      .catch((error: any) => console.error(error));
   }
 
   // This is called during initializeAppleMusicKit in order to give the component access the MusicKit
@@ -86,7 +100,7 @@ export class AppleMusicKitComponent implements OnInit {
 
   async queueSongsFromPlaylists(plist_id: string, song: number, _callback: () => void) {
     const music = this.appleMusicKit
-    const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
+    // const url = `https://itunes.apple.com/us/playlist/${plist_id}`;
     this.musicPlaying = false;
     music.setQueue({ playlist: plist_id, startPosition: song }).then((queue: any) => {
       this.musicAlreadyQueued = true;
@@ -229,11 +243,52 @@ export class AppleMusicKitComponent implements OnInit {
 
   }
 
+  getUser(item: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/users/' + item;
+
+    return this.http.get(url, { responseType: 'json', headers: headers })
+
+  }
+
+  postUser(id: string, name: string, service: string, pfp: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/add-user/';
+    const item = {
+      user_id: id,
+      user_name: name,
+      service: service,
+      pfp: pfp
+    }
+    console.log(item)
+
+    return this.http.post(url, item)
+  }
+
+  subscribeGetUser(item: any){
+    let user = this.getUser(item.user);
+    user.subscribe({
+      next: (response: any) => {
+        console.log(response)
+      }, error: (error: any) => {
+        let userPost = this.postUser(item.user, item.username, item.service, item.pfp)
+        userPost.subscribe({
+          next: (response: any) => {
+            console.log(response)
+          }, error: (error: any) => {
+            console.error(error)
+          }
+        })
+      }
+    })
+  }
+
   async getPlaylists() {
     const music = this.appleMusicKit;
     music.api.music('/v1/me/library/playlists').then((result: any) => {
       console.log("Playlists:");
       console.log(result);
+
       const playlists = result['data']['data'];
       playlists.forEach((value: any) => {
         // console.log(value)
@@ -251,16 +306,24 @@ export class AppleMusicKitComponent implements OnInit {
         this.obj = {
           info: [
             {
-              name: 'Name',
+              name: this.appleUsername !== undefined ? this.appleUsername : "Name",
               service: 'Apple Music',
-              id: 0,
-              plist_id: value.id
+              id: '0'
+              
             }
           ],
+          plist_id: value.id,
           image: '',
-          profile_image: ''
+          profile_image: 'https://logos-world.net/wp-content/uploads/2020/11/Apple-Music-Logo-2015-present.png'
         }
-
+        let tempObj = {
+          username: this.appleUsername !== undefined ? this.appleUsername : "Name",
+          service: 'Apple Music',
+          user: '0',
+          pfp: 'https://logos-world.net/wp-content/uploads/2020/11/Apple-Music-Logo-2015-present.png'
+        }
+        console.log(this.obj)
+        this.subscribeGetUser(tempObj)
         temp.push(this.obj)
         this.playlists.push(temp)
       });
@@ -308,22 +371,129 @@ export class AppleMusicKitComponent implements OnInit {
     })
   }
 
-  onLoad() {
-    this.getPlaylists().then(() => {
-      console.log("apple-music-kit json after calling getPlaylists: " + JSON.stringify(this.json))
-    }).catch((error: any) => {
-      console.error("Couldn't get lists. Error: " + error)
-    })
-  }
-
-
   searchAppleCatalog(searchTerm: string, searchType?: string, resultsLimit?: number) {
     const types = searchType !== undefined ? searchType : "songs,albums,artists";
     const limit = resultsLimit !== undefined && resultsLimit < 26 && resultsLimit > 1 ? resultsLimit : 25;
     const music = this.appleMusicKit;
-    music.api.music(`/v1/catalog/us/search?types=${types}&term=${searchTerm}&limit=${limit}`)
-    .then((results: any) => console.log(results))
-    .catch((error: any) => console.error(error));
+    return new Promise((resolve, reject) => {
+      music.api.music(`/v1/catalog/us/search?types=${types}&term=${searchTerm}&limit=${limit}`)
+        .then((results: any) => resolve(results))
+        .catch((error: any) => reject(error));
+    });
   }
 
+  createApplePlaylist(playlistData: any[]) {
+    const music = this.appleMusicKit;
+    const playlistName: string = playlistData[0] != "" ? playlistData[0] : "SwapStream Generated Playlist " + Date.prototype.toLocaleDateString();
+    return new Promise((resolve, reject) => {
+      const songData = playlistData.slice(2); // The first two items are playlist metadata
+      let songIDs: any = [];
+      this.findBestSongTitleMatchForAllSongs(songData, songIDs, 0)
+        .then((ids: any) => {
+          const songObjArray = songIDs.map((songID: any) => {
+            return {
+              id: songID,
+              type: 'songs'
+            };
+          });
+
+          const postRequestBody = {
+            attributes: {
+              name: playlistName,
+              description: 'Playlist created using the SwapStream service.'
+            },
+            relationships: {
+              tracks: {
+                data: songObjArray
+              }
+            }
+          };
+
+          const headers = {
+            'Authorization': `Bearer ${music.developerToken}`,
+            'Music-User-Token': `${music.musicUserToken}`
+          };
+
+          const requestOptions: RequestInit = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(postRequestBody),
+          }
+
+          fetch(`https://api.music.apple.com/v1/me/library/playlists`, requestOptions)
+            .then((response: any) => response.body)
+            .then(rb => {
+              const reader = rb.getReader();
+
+              return new ReadableStream({
+                start(controller) {
+                  function push() {
+                    reader.read().then((read: any) => {
+                      if (read.done) {
+                        controller.close();
+                        return;
+                      }
+                      controller.enqueue(read.value);
+                      push();
+                    })
+                  }
+                  push();
+                }
+              });
+            })
+            .then(stream => {
+              return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+            })
+            .then(result => {
+              const playlistCreationResponse = JSON.parse(result);
+              resolve(playlistCreationResponse.data[0].id);
+            })
+            .catch((error: any) => reject(error));
+        })
+        .catch((error: any) => reject(error));
+    });
+  }
+
+  findBestSongTitleMatchForAllSongs(songData: any, songIDs: any[], index: number) {
+    return new Promise((resolve, reject) => {
+      if (index == songData.length) {
+        if (songIDs.length > 0) {
+          resolve(songIDs);
+        }
+        reject('Failed to aquire any song IDs');
+      }
+      const searchTerm = songData[index][0]; // Song title
+      this.searchAppleCatalog(searchTerm, "songs")
+        .then((searchResults: any) => {
+          const potentialMatches: any[] = searchResults.data.results.songs.data;
+          this.findBestSongTitleMatch(searchTerm, potentialMatches, 0)
+            .then(songID => songIDs.push(songID))
+            .catch(error => console.error(error))
+        })
+        .catch((error: any) => console.error(error))
+        .finally(() => {
+          this.findBestSongTitleMatchForAllSongs(songData, songIDs, ++index)
+            .then(resolution => resolve(resolution))
+            .catch(rejection => reject(rejection));
+        });
+    })
+  }
+
+  findBestSongTitleMatch(searchTerm: string, potentialMatches: any, iteration: number) {
+    return new Promise((resolve, reject) => {
+      if (iteration == potentialMatches.length) {
+        reject(`No match found for song title: ${searchTerm}`);
+      }
+      const song = potentialMatches[iteration];
+      if (song.attributes.name.toLowerCase() == searchTerm.toLowerCase()) {
+        resolve(song.id);
+      }
+      else {
+        this.findBestSongTitleMatch(searchTerm, potentialMatches, ++iteration)
+          .then(output => resolve(output))
+          .catch(failure => reject(failure));
+      }
+    });
+  }
+  // EOF
 }

@@ -129,6 +129,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     let plist = this.json.playlists[this.selected_list]
     let obj = plist[1]
     let songs = this.song_list.slice(2)
+    console.log(obj)
     
     let item = { plist_id: obj.plist_id, user_id: obj.info[0].id, songs: songs, name: plist[0], image: obj.image }
     console.log(item)
@@ -175,9 +176,33 @@ export class ListDisplayComponent implements OnInit, OnChanges {
 
   }
 
+  createPlaylistOnSpotify(){
+    console.log("sending")
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    let item = { name: this.song_list[0], songs: this.song_list.slice(2) }
+    const url: string = 'http://127.0.0.1:5000/spotify/add/copy';
+
+    return this.http.post<object>(url, item);
+  }
+
+  copyPlaylistSubscribe(){
+    let item = this.createPlaylistOnSpotify()
+    item.subscribe({
+      next: (result: any) => {
+        console.log(result)
+      }, error: (error: any) => {
+        console.error(error)
+      }
+    })
+  }
+
   addSelectedPlaylist(): void{
-    if(!this.isAM){//technically, this can post either, but some fields need to be updated
+    if(!this.isAM && !this.search){//technically, this can post either, but some fields need to be updated
       this.subscribePlaylist()
+    }
+    if(this.search && !this.isAM){
+      console.log("we here bro")
+      this.copyPlaylistSubscribe()
     }
   }
 
