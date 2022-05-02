@@ -1,19 +1,37 @@
-.btn {
-    height: 50px;
+.title {
+    color: azure;
+    font-size: 100px;
+    margin-top: 10%;
+}
+
+.front-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spotify-button {
+    height: 200px;
     width: 200px;
     background-color: black;
     opacity: 0.8;
     transition: 0.3s;
-    
+    margin: 5px;
+    outline: 2px;
+    outline-style: ridge;
+    outline-color: azure;
 }
 
-.abtn {
-    height: 50px;
+.apple-button {
+    height: 200px;
     width: 200px;
     background-color: white;
     opacity: 0.8;
     transition: 0.3s;
-    
+    margin: 5px;
+    outline: 2px;
+    outline-style: ridge;
+    outline-color: azure
 }
 
 .spot {
@@ -24,11 +42,13 @@
 .login {
     text-align: center;
     display: flex;
-    align-content: flex-end;
-    justify-content: flex-end;
-    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: row;
     margin: auto;
-    
+    position: absolute;
+    top: calc(50% - 100px);
+    left: calc(50% - 210px);
 }
 
 .btn:hover {opacity: 1}
