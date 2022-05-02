@@ -157,6 +157,10 @@ export class WindowComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  appleAdd(event: any){
+    this.playerModule.copyListToApple(event)
+  }
+
   doNothing(json: any) {
     if (this.isAM) {
       this.item = json
