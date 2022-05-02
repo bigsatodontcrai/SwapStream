@@ -1,19 +1,47 @@
-.btn {
-    height: 50px;
+.title {
+    color: azure;
+    font-size: 100px;
+    margin-top: 10%;
+}
+
+.front-page {
+    --spotify-green: rgba(29, 185, 84, 1);
+    --spotify-gray: rgba(18, 18, 18, 1);
+    --apple-light-pink: #fb5c74;
+    --apple-dark-pink: #fa243c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+    min-width: 100%;
+    background-image: linear-gradient(45deg, var(--apple-light-pink), var(--apple-dark-pink), black, black, var(--spotify-green), var(--spotify-gray));
+    background-size: 1000%;
+    background-position: top;
+    transition: background-position 3s;
+}
+
+.spotify-button {
+    height: 200px;
     width: 200px;
     background-color: black;
     opacity: 0.8;
     transition: 0.3s;
-    
+    margin: 5px;
+    outline: 2px;
+    outline-style: ridge;
+    outline-color: azure;
 }
 
-.abtn {
-    height: 50px;
+.apple-button {
+    height: 200px;
     width: 200px;
     background-color: white;
     opacity: 0.8;
     transition: 0.3s;
-    
+    margin: 5px;
+    outline: 2px;
+    outline-style: ridge;
+    outline-color: azure
 }
 
 .spot {
@@ -24,12 +52,19 @@
 .login {
     text-align: center;
     display: flex;
-    align-content: flex-end;
-    justify-content: flex-end;
-    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: row;
     margin: auto;
-    
+    position: absolute;
+    top: calc(50% - 100px);
+    left: calc(50% - 210px);
 }
 
-.btn:hover {opacity: 1}
-.abtn:hover {opacity: 1}
+.btn {
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 1
+}
