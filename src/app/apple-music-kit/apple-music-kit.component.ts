@@ -339,7 +339,6 @@ export class AppleMusicKitComponent implements OnInit {
       let songIDs: any = [];
       this.findBestSongTitleMatchForAllSongs(songData, songIDs, 0)
         .then((ids: any) => {
-
           const songObjArray = songIDs.map((songID: any) => {
             return {
               id: songID,
