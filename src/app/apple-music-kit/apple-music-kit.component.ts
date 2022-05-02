@@ -243,7 +243,9 @@ export class AppleMusicKitComponent implements OnInit {
   async getPlaylists() {
     const music = this.appleMusicKit;
     music.api.music('/v1/me/library/playlists').then((result: any) => {
-      //const playlistID = result['data']['data'][0]['id'];
+      console.log("Playlists:");
+      console.log(result);
+
       const playlists = result['data']['data'];
       playlists.forEach((value: any) => {
         // console.log(value)
@@ -263,7 +265,8 @@ export class AppleMusicKitComponent implements OnInit {
             {
               name: this.appleUsername !== undefined ? this.appleUsername : "Name",
               service: 'Apple Music',
-              id: 0
+              id: 0,
+              plist_id: value.id
             }
           ],
           image: '',
