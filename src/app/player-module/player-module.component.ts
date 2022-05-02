@@ -43,8 +43,9 @@ export class PlayerModuleComponent implements OnInit, OnChanges {
     this.kitModule.playFromPlist(indices)
   }
 
-  copyListToApple(item: any){
-    this.kitModule.createApplePlaylist(item)
+  async copyListToApple(item: any){
+    await this.kitModule.createApplePlaylist(item);
+    return true;
   }
 
 

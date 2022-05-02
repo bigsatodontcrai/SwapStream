@@ -10,7 +10,7 @@
 
 <ng-template appLoginPage></ng-template>
 <!--<app-apple-music-kit></app-apple-music-kit>-->
-<app-window *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit" [isAM]="isAM"></app-window>
+<app-window (refreshEvent)="getEvent($event)" *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit" [isAM]="isAM"></app-window>
 <div id="background" class="front-page" [ngStyle]="{'background-position': backgroundGradientPosition}" *ngIf="!userlogin">
     <div class="title" >SwapStream</div>
     <div class="login">

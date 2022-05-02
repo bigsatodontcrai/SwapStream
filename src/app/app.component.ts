@@ -152,6 +152,13 @@ export class AppComponent {
     this.loadSpotifyPlaylists()
   }
 
+  getEvent(event: any){
+    if(event){
+      //this.loadApple()
+      this.loadSpotify()
+    }
+  }
+
   loadSpotifyPlaylists() {
     let thing = this.initializeSpotifyPlaylists();
     let item: any;

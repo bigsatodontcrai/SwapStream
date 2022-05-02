@@ -35,9 +35,9 @@
             <app-search-module (newItemEvent)="doSearch($event)" (otherItemEvent)="setToggle($event)">
             </app-search-module>
             <!-- <app-list-display [json]="item2" [song_display]="toggle" [search]="true"></app-list-display> -->
-
+            
             <div *ngIf="open && !toggle" class="lib">
-                <app-list-display [json]="item2" (newItemEvent)="setIndices($event)" [create]="false" [search]="true" [isAM]="isAM" (outputEvent)="appleAdd($event)"></app-list-display>
+                <app-list-display [json]="item2" (newItemEvent)="setIndices($event)" [create]="false" [search]="true" [isAM]="isAM" (outputEvent)="appleAdd($event)" (updateLibraryEvent)="spotifyUpdate($event)"></app-list-display>
                 <mat-divider [vertical]="true"></mat-divider>
             </div>
             

@@ -155,6 +155,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
         next: (response: any)=>{
           this.clear()
           console.log(response)//response will be the new playlist info to push to the front of the list.
+          this.json = response
         }, error: () => {
           console.error("ting")
         }
@@ -191,6 +192,8 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     item.subscribe({
       next: (result: any) => {
         console.log(result)
+        this.goBack()
+        this.updateLibraryEvent.emit(true)
       }, error: (error: any) => {
         console.error(error)
       }

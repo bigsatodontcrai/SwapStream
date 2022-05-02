@@ -1,4 +1,4 @@
-import { OnChanges, Component, AfterViewInit, ViewChild, ViewContainerRef, Input, OnDestroy } from '@angular/core';
+import { Output, EventEmitter, OnChanges, Component, AfterViewInit, ViewChild, ViewContainerRef, Input, OnDestroy } from '@angular/core';
 import { LoginPageDirective } from '../login-page.directive'
 import { ListDisplayComponent } from '../list-display/list-display.component'
 import { SearchModuleComponent } from '../search-module/search-module.component'
@@ -23,6 +23,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   @Input() data: any;
   @Input() appleMusicKit: any;
   @Input() isAM = false;
+  @Output() refreshEvent = new EventEmitter<boolean>()
   indices: any[] = [];
   profile = false;
   item: any;
@@ -32,6 +33,7 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   open = false;
   create = false;
   most_recent: any[] = [];
+  display_message = false;
 
   constructor(public http: HttpClient) {
 
@@ -158,7 +160,17 @@ export class WindowComponent implements AfterViewInit, OnChanges {
   }
 
   appleAdd(event: any){
-    this.playerModule.copyListToApple(event)
+    this.playerModule.copyListToApple(event).then((response:boolean)=>{
+      this.display_message = true;
+      this.item2 = {}
+    }).catch(()=>{
+      //this.refreshEvent.emit(false)
+    })
+  }
+
+  spotifyUpdate(event: any){
+    console.log("Here!")
+    this.refreshEvent.emit(event)
   }
 
   doNothing(json: any) {
