@@ -11,14 +11,17 @@
 <ng-template appLoginPage></ng-template>
 <!--<app-apple-music-kit></app-apple-music-kit>-->
 <app-window *ngIf="userlogin" [data]="item" [appleMusicKit]="appleMusicKit" [isAM]="isAM"></app-window>
-<div class="login" *ngIf="!userlogin">
-    <div>
-        <button mat-button class='btn' (click)='loadSpotify()'> <img class="spot"
-                src="../../assets/images/Spotify_Logo_RGB_White.png"> </button>
-    </div>
-    <div>
-        <button mat-button class='abtn' (click)='loadApple()'> <img class="spot"
-                src="../../assets/images/Apple-Music-Emblem.png"> </button>
+<div id="background" class="front-page" [ngStyle]="{'background-position': backgroundGradientPosition}" *ngIf="!userlogin">
+    <div class="title" >SwapStream</div>
+    <div class="login">
+        <div>
+            <button mat-button class='spotify-button btn' (click)='loadSpotify()' (mouseover)='transitionBackground("spotify")' (mouseout)='transitionBackground("none")'> <img class="spot"
+                    src="../../assets/images/Spotify_Logo_RGB_White.png"> </button>
+        </div>
+        <div>
+            <button mat-button class='apple-button btn' (click)='loadApple()' (mouseover)='transitionBackground("apple")' (mouseout)='transitionBackground("none")'> <img class="spot"
+                    src="../../assets/images/Apple-Music-Emblem.png"> </button>
+        </div>
     </div>
 </div>
 <!-- <mat-slider min="1" max="100" step="1" value="50"></mat-slider> -->
