@@ -15,7 +15,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   @Input() song_display = false;
   @ViewChild(SearchModuleComponent, { static: true }) searchModule !: SearchModuleComponent;
   @Input() json: any | object;
-  isAM = false;
+  @Input() isAM = false;
   selected_list = 0;
   selected_owner = '';
   selected_img = '';
@@ -26,6 +26,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   @Output() newItemEvent = new EventEmitter<any[]>()
   @Output() newCreateEvent = new EventEmitter<boolean>()
   @Output() updateLibraryEvent = new EventEmitter<boolean>()
+  @Output() outputEvent = new EventEmitter<any[]>()
 
   @Input() create = false; // activates create mode
   @Input() song_urls: string[] = []; // will use ngFor in create mode
@@ -197,12 +198,17 @@ export class ListDisplayComponent implements OnInit, OnChanges {
   }
 
   addSelectedPlaylist(): void{
-    if(!this.isAM && !this.search){//technically, this can post either, but some fields need to be updated
+    if(!this.search){//technically, this can post either, but some fields need to be updated
       this.subscribePlaylist()
     }
     if(this.search && !this.isAM){
       console.log("we here bro")
       this.copyPlaylistSubscribe()
+    }
+    if(this.isAM && this.search){
+      console.log("we here bro apple")
+      this.outputEvent.emit(this.song_list)
+      console.log(this.song_list)
     }
   }
 
