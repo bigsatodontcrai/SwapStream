@@ -129,6 +129,7 @@ export class ListDisplayComponent implements OnInit, OnChanges {
     let plist = this.json.playlists[this.selected_list]
     let obj = plist[1]
     let songs = this.song_list.slice(2)
+    console.log(obj)
     
     let item = { plist_id: obj.plist_id, user_id: obj.info[0].id, songs: songs, name: plist[0], image: obj.image }
     console.log(item)

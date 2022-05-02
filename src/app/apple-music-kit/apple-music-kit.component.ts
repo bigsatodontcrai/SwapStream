@@ -2,6 +2,9 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import * as jose from 'jose';
 import { songArtDataType } from './song-art-data';
 import { ArtworkSource } from 'src/assets/artwork-source-enum'
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 declare var MusicKit: any;
 
 @Component({
@@ -31,7 +34,7 @@ export class AppleMusicKitComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<any>();
 
-  constructor() {
+  constructor(public http:HttpClient) {
     this.songArtData = {
       height: 2400,
       url: ' ',
@@ -240,6 +243,46 @@ export class AppleMusicKitComponent implements OnInit {
 
   }
 
+  getUser(item: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/users/' + item;
+
+    return this.http.get(url, { responseType: 'json', headers: headers })
+
+  }
+
+  postUser(id: string, name: string, service: string, pfp: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    const url: string = 'http://127.0.0.1:5000/add-user/';
+    const item = {
+      user_id: id,
+      user_name: name,
+      service: service,
+      pfp: pfp
+    }
+    console.log(item)
+
+    return this.http.post(url, item)
+  }
+
+  subscribeGetUser(item: any){
+    let user = this.getUser(item.user);
+    user.subscribe({
+      next: (response: any) => {
+        console.log(response)
+      }, error: (error: any) => {
+        let userPost = this.postUser(item.user, item.username, item.service, item.pfp)
+        userPost.subscribe({
+          next: (response: any) => {
+            console.log(response)
+          }, error: (error: any) => {
+            console.error(error)
+          }
+        })
+      }
+    })
+  }
+
   async getPlaylists() {
     const music = this.appleMusicKit;
     music.api.music('/v1/me/library/playlists').then((result: any) => {
@@ -265,14 +308,22 @@ export class AppleMusicKitComponent implements OnInit {
             {
               name: this.appleUsername !== undefined ? this.appleUsername : "Name",
               service: 'Apple Music',
-              id: 0,
-              plist_id: value.id
+              id: '0'
+              
             }
           ],
+          plist_id: value.id,
           image: '',
-          profile_image: ''
+          profile_image: 'https://logos-world.net/wp-content/uploads/2020/11/Apple-Music-Logo-2015-present.png'
         }
-
+        let tempObj = {
+          username: this.appleUsername !== undefined ? this.appleUsername : "Name",
+          service: 'Apple Music',
+          user: '0',
+          pfp: 'https://logos-world.net/wp-content/uploads/2020/11/Apple-Music-Logo-2015-present.png'
+        }
+        console.log(this.obj)
+        this.subscribeGetUser(tempObj)
         temp.push(this.obj)
         this.playlists.push(temp)
       });
